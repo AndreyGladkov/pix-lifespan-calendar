@@ -10,45 +10,45 @@ export const VIEW_TYPE_LIFE_CALENDAR = "lifespan-calendar";
 export const LIFE_CALENDAR_ICON = "calendar-days";
 
 export interface LifeCalendarViewDeps {
-	store: SettingsStore;
-	translator: Translator;
-	data: LifeExpectancyData;
-	openSettings: () => void;
+    store: SettingsStore;
+    translator: Translator;
+    data: LifeExpectancyData;
+    openSettings: () => void;
 }
 
 export class LifeCalendarView extends ItemView {
-	private root: Root | null = null;
+    private root: Root | null = null;
 
-	constructor(
-		leaf: WorkspaceLeaf,
-		private readonly deps: LifeCalendarViewDeps,
-	) {
-		super(leaf);
-	}
+    constructor(
+        leaf: WorkspaceLeaf,
+        private readonly deps: LifeCalendarViewDeps,
+    ) {
+        super(leaf);
+    }
 
-	getViewType(): string {
-		return VIEW_TYPE_LIFE_CALENDAR;
-	}
+    getViewType(): string {
+        return VIEW_TYPE_LIFE_CALENDAR;
+    }
 
-	getDisplayText(): string {
-		return this.deps.translator.t("viewTitle");
-	}
+    getDisplayText(): string {
+        return this.deps.translator.t("viewTitle");
+    }
 
-	override getIcon(): string {
-		return LIFE_CALENDAR_ICON;
-	}
+    override getIcon(): string {
+        return LIFE_CALENDAR_ICON;
+    }
 
-	override async onOpen(): Promise<void> {
-		this.root = createRoot(this.contentEl);
-		this.root.render(
-			<StrictMode>
-				<LifeCalendar {...this.deps} />
-			</StrictMode>,
-		);
-	}
+    override async onOpen(): Promise<void> {
+        this.root = createRoot(this.contentEl);
+        this.root.render(
+            <StrictMode>
+                <LifeCalendar {...this.deps} />
+            </StrictMode>,
+        );
+    }
 
-	override async onClose(): Promise<void> {
-		this.root?.unmount();
-		this.root = null;
-	}
+    override async onClose(): Promise<void> {
+        this.root?.unmount();
+        this.root = null;
+    }
 }

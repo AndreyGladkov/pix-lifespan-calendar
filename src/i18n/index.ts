@@ -14,34 +14,34 @@ const DICTIONARIES = { en, ru, de, fr } satisfies Record<string, Dictionary>;
 export type Language = keyof typeof DICTIONARIES;
 
 export function supportedLanguage(language: string): Language {
-	const base = language.toLowerCase().split("-")[0] ?? "";
-	return base in DICTIONARIES ? (base as Language) : "en";
+    const base = language.toLowerCase().split("-")[0] ?? "";
+    return base in DICTIONARIES ? (base as Language) : "en";
 }
 
 export interface Translator {
-	language: Language;
-	t: (key: MessageKey, params?: Params) => string;
-	plural: (key: PluralKey, count: number, params?: Params) => string;
-	formatNumber: (value: number, options?: Intl.NumberFormatOptions) => string;
+    language: Language;
+    t: (key: MessageKey, params?: Params) => string;
+    plural: (key: PluralKey, count: number, params?: Params) => string;
+    formatNumber: (value: number, options?: Intl.NumberFormatOptions) => string;
 }
 
 function interpolate(template: string, params: Params): string {
-	return template.replace(/\{(\w+)\}/g, (match, name: string) => {
-		const value = params[name];
-		return value === undefined ? match : String(value);
-	});
+    return template.replace(/\{(\w+)\}/g, (match, name: string) => {
+        const value = params[name];
+        return value === undefined ? match : String(value);
+    });
 }
 
 export function createTranslator(language: Language): Translator {
-	const dictionary: Dictionary = DICTIONARIES[language];
-	const pluralRules = new Intl.PluralRules(language);
-	return {
-		language,
-		t: (key, params = {}) => interpolate(dictionary[key], params),
-		plural: (key, count, params = {}) => {
-			const forms = dictionary[key];
-			return interpolate(forms[pluralRules.select(count)] ?? forms.other, params);
-		},
-		formatNumber: (value, options) => new Intl.NumberFormat(language, options).format(value),
-	};
+    const dictionary: Dictionary = DICTIONARIES[language];
+    const pluralRules = new Intl.PluralRules(language);
+    return {
+        language,
+        t: (key, params = {}) => interpolate(dictionary[key], params),
+        plural: (key, count, params = {}) => {
+            const forms = dictionary[key];
+            return interpolate(forms[pluralRules.select(count)] ?? forms.other, params);
+        },
+        formatNumber: (value, options) => new Intl.NumberFormat(language, options).format(value),
+    };
 }

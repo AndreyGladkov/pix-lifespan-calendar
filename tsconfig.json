@@ -1,19 +1,19 @@
 {
-	"compilerOptions": {
-		"target": "ES2021",
-		"module": "ESNext",
-		"moduleResolution": "bundler",
-		"lib": ["DOM", "DOM.Iterable", "ES2022"],
-		"jsx": "react-jsx",
-		"strict": true,
-		"noUncheckedIndexedAccess": true,
-		"noImplicitOverride": true,
-		"resolveJsonModule": true,
-		"isolatedModules": true,
-		"verbatimModuleSyntax": true,
-		"skipLibCheck": true,
-		"noEmit": true,
-		"types": ["node"]
-	},
-	"include": ["src", "scripts", "tests"]
+  "compilerOptions": {
+    "target": "ES2021",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "lib": ["DOM", "DOM.Iterable", "ES2022"],
+    "jsx": "react-jsx",
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "verbatimModuleSyntax": true,
+    "skipLibCheck": true,
+    "noEmit": true,
+    "types": ["node"]
+  },
+  "include": ["src", "scripts", "tests"]
 }
