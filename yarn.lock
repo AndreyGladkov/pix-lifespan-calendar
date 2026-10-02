@@ -1698,6 +1698,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"eslint-config-prettier@npm:^10.1.8":
+  version: 10.1.8
+  resolution: "eslint-config-prettier@npm:10.1.8"
+  peerDependencies:
+    eslint: ">=7.0.0"
+  bin:
+    eslint-config-prettier: bin/cli.js
+  checksum: 10c0/e1bcfadc9eccd526c240056b1e59c5cd26544fe59feb85f38f4f1f116caed96aea0b3b87868e68b3099e55caaac3f2e5b9f58110f85db893e83a332751192682
+  languageName: node
+  linkType: hard
+
 "eslint-import-resolver-node@npm:^0.3.9":
   version: 0.3.10
   resolution: "eslint-import-resolver-node@npm:0.3.10"
@@ -2929,10 +2940,12 @@ __metadata:
     date-fns: "npm:^4"
     esbuild: "npm:^0.28.2"
     eslint: "npm:^9"
+    eslint-config-prettier: "npm:^10.1.8"
     eslint-plugin-obsidianmd: "npm:^0.4.2"
     globals: "npm:^17.13.0"
     i18n-iso-countries: "npm:^7.14.0"
     obsidian: "npm:1.8.7"
+    prettier: "npm:^3.9.9"
     react: "npm:^19"
     react-dom: "npm:^19"
     tsx: "npm:^4.23.15"
@@ -3470,6 +3483,15 @@ __metadata:
   version: 1.2.1
   resolution: "prelude-ls@npm:1.2.1"
   checksum: 10c0/b00d617431e7886c520a6f498a2e14c75ec58f6d93ba48c3b639cf241b54232d90daa05d83a9e9b9fef6baa63cb7e1e4602c2372fea5bc169668401eb127d0cd
+  languageName: node
+  linkType: hard
+
+"prettier@npm:^3.9.9":
+  version: 3.9.9
+  resolution: "prettier@npm:3.9.9"
+  bin:
+    prettier: bin/prettier.cjs
+  checksum: 10c0/d50ea2537b2ff7dbd5088a214f4d936484e55c665cea2185b477a55b0770be55f3b156a71f63a9a639def6b334667bb327139dc85f2a1041c0a34752cdc74647
   languageName: node
   linkType: hard
 
