@@ -1,6 +1,12 @@
 import { describe, expect, it } from "vitest";
 import data from "../src/data/life-expectancy.json";
-import { resolveLifeExpectancy, type LifeExpectancyData, type LifeExpectancyInput } from "../src/domain/lifeExpectancy";
+import {
+    lifestyleSpans,
+    resolveLifeExpectancy,
+    type LifeExpectancyData,
+    type LifeExpectancyEstimate,
+    type LifeExpectancyInput,
+} from "../src/domain/lifeExpectancy";
 import { NO_LIFESTYLE } from "../src/domain/lifestyle";
 
 const fixture: LifeExpectancyData = {
@@ -31,6 +37,7 @@ describe("resolveLifeExpectancy", () => {
             years: 78.8,
             estimate: { years: 78.8, country: kazakhstan, baseline: 78.8, adjustments: [] },
             overridden: false,
+            spans: { gained: null, lost: null },
         });
     });
 
@@ -59,6 +66,39 @@ describe("resolveLifeExpectancy", () => {
     it("never goes below one year", () => {
         const tiny: LifeExpectancyData = { ...fixture, world: { year: 2023, both: 5, male: 5, female: 5 } };
         expect(resolveLifeExpectancy(tiny, input({ country: null, smoking: "current" })).years).toBe(1);
+    });
+});
+
+describe("lifestyleSpans", () => {
+    const estimate = (baseline: number, adjustments: number[]): LifeExpectancyEstimate => ({
+        years: adjustments.reduce((sum, years) => sum + years, baseline),
+        country: null,
+        baseline,
+        adjustments: adjustments.map((years) => ({ factor: years < 0 ? "smoking" : "activity", years })),
+    });
+
+    it("shows what gains add after losses and what the net loss takes away", () => {
+        const spans = lifestyleSpans(estimate(74.8, [-10, 3.4]));
+        expect(spans.gained?.from).toBeCloseTo(64.8, 5);
+        expect(spans.gained?.to).toBeCloseTo(68.2, 5);
+        expect(spans.lost?.from).toBeCloseTo(68.2, 5);
+        expect(spans.lost?.to).toBe(74.8);
+    });
+
+    it("extends past the WHO value when gains outweigh losses", () => {
+        const spans = lifestyleSpans(estimate(74.8, [-0.5, 4.5]));
+        expect(spans.gained?.from).toBeCloseTo(74.3, 5);
+        expect(spans.gained?.to).toBeCloseTo(78.8, 5);
+        expect(spans.lost).toBeNull();
+    });
+
+    it("marks nothing without adjustments", () => {
+        expect(lifestyleSpans(estimate(74.8, []))).toEqual({ gained: null, lost: null });
+    });
+
+    it("is not applied with a manual override", () => {
+        const resolved = resolveLifeExpectancy(fixture, input({ lifeExpectancyOverride: 85, smoking: "current" }));
+        expect(resolved.spans).toEqual({ gained: null, lost: null });
     });
 });
 

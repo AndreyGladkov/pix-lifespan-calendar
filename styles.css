@@ -112,10 +112,13 @@
     opacity: 0.25;
 }
 
-.pix-lifespan-calendar-placeholder {
-    fill: none;
-    stroke: var(--background-modifier-border);
-    stroke-width: 1;
+.pix-lifespan-calendar-cell.is-gained {
+    fill: var(--color-cyan);
+}
+
+.pix-lifespan-calendar-cell.is-lost {
+    fill: var(--color-red);
+    opacity: 0.4;
 }
 
 .pix-lifespan-calendar-tooltip {

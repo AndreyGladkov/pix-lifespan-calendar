@@ -29,10 +29,23 @@ export interface LifeExpectancyEstimate {
     adjustments: LifestyleAdjustment[];
 }
 
+export interface YearRange {
+    from: number;
+    to: number;
+}
+
+export interface LifestyleSpans {
+    gained: YearRange | null;
+    lost: YearRange | null;
+}
+
+export const NO_LIFESTYLE_SPANS: LifestyleSpans = { gained: null, lost: null };
+
 export interface ResolvedLifeExpectancy {
     years: number;
     estimate: LifeExpectancyEstimate;
     overridden: boolean;
+    spans: LifestyleSpans;
 }
 
 export interface EstimateInput extends Lifestyle {
@@ -53,8 +66,24 @@ export function estimateLifeExpectancy(data: LifeExpectancyData, input: Estimate
     return { years: Math.max(LIFE_EXPECTANCY_RANGE.min, adjusted), country, baseline, adjustments };
 }
 
+export function lifestyleSpans({ baseline, adjustments, years }: LifeExpectancyEstimate): LifestyleSpans {
+    const total = (sign: 1 | -1): number =>
+        adjustments.filter((a) => Math.sign(a.years) === sign).reduce((sum, a) => sum + a.years, 0);
+    const gains = total(1);
+    const afterLosses = Math.max(LIFE_EXPECTANCY_RANGE.min, baseline + total(-1));
+    return {
+        gained: gains > 0 ? { from: afterLosses, to: years } : null,
+        lost: years < baseline ? { from: years, to: baseline } : null,
+    };
+}
+
 export function resolveLifeExpectancy(data: LifeExpectancyData, input: LifeExpectancyInput): ResolvedLifeExpectancy {
     const estimate = estimateLifeExpectancy(data, input);
     const override = input.lifeExpectancyOverride;
-    return { years: override ?? estimate.years, estimate, overridden: override !== null };
+    return {
+        years: override ?? estimate.years,
+        estimate,
+        overridden: override !== null,
+        spans: override === null ? lifestyleSpans(estimate) : NO_LIFESTYLE_SPANS,
+    };
 }

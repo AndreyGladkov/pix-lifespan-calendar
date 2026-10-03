@@ -2,7 +2,7 @@ import { parseISO } from "date-fns";
 import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import { ageAt, buildGrid, GRID_SHAPE, type GridUnit } from "../domain/grid";
 import { cellLayout } from "../domain/layout";
-import { resolveLifeExpectancy, type LifeExpectancyData } from "../domain/lifeExpectancy";
+import { resolveLifeExpectancy, type LifeExpectancyData, type LifestyleSpans } from "../domain/lifeExpectancy";
 import { lifespan } from "../domain/lifespan";
 import { lifeStats, type LifeStats } from "../domain/stats";
 import type { MessageKey, PluralKey, Translator } from "../i18n";
@@ -46,6 +46,7 @@ export function LifeCalendar({ store, translator, data, openSettings }: LifeCale
         <CalendarGrid
             birthDate={settings.birthDate}
             lifeExpectancyYears={lifeExpectancy.years}
+            spans={lifeExpectancy.spans}
             expectancyHint={estimateHint(translator, lifeExpectancy)}
             unit={settings.unit}
             today={today}
@@ -58,6 +59,7 @@ export function LifeCalendar({ store, translator, data, openSettings }: LifeCale
 interface CalendarGridProps {
     birthDate: string;
     lifeExpectancyYears: number;
+    spans: LifestyleSpans;
     expectancyHint: string | undefined;
     unit: GridUnit;
     today: Date;
@@ -68,6 +70,7 @@ interface CalendarGridProps {
 function CalendarGrid({
     birthDate,
     lifeExpectancyYears,
+    spans,
     expectancyHint,
     unit,
     today,
@@ -76,7 +79,12 @@ function CalendarGrid({
 }: CalendarGridProps) {
     const rootRef = useRef<HTMLDivElement>(null);
     const [pointer, setPointer] = useState<CellPointer | null>(null);
-    const life = useMemo(() => lifespan(parseISO(birthDate), lifeExpectancyYears), [birthDate, lifeExpectancyYears]);
+    const { gained, lost } = spans;
+    const life = useMemo(
+        () => lifespan(parseISO(birthDate), lifeExpectancyYears, { gained, lost }),
+        // spans is a new object on every settings render, so memoize on its bounds rather than its identity.
+        [birthDate, lifeExpectancyYears, gained?.from, gained?.to, lost?.from, lost?.to],
+    );
     const blocks = useMemo(() => buildGrid(unit, life, today), [unit, life, today]);
     const stats = lifeStats(blocks, life, today);
     const [measureRef, gridWidth] = useElementWidth<HTMLDivElement>();
