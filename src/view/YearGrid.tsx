@@ -3,6 +3,9 @@ import { emptyPositions, type Cell, type GridUnit, type YearBlock } from "../dom
 import type { CellLayout } from "../domain/layout";
 
 const CORNER_RATIO = 0.2;
+
+export const cellClass = ({ state, lifestyle }: Pick<Cell, "state" | "lifestyle">): string =>
+    `pix-lifespan-calendar-cell is-${state}${lifestyle ? ` is-${lifestyle}` : ""}`;
 const RENDER_MARGIN = "800px";
 
 export interface CellPointer {
@@ -69,7 +72,7 @@ export function YearGrid({ block, unit, layout, onHover }: YearGridProps) {
                     {block.cells.map((cell) => (
                         <rect
                             key={cell.key}
-                            className={`pix-lifespan-calendar-cell is-${cell.state}`}
+                            className={cellClass(cell)}
                             x={cell.column * pitch}
                             y={cell.row * pitch}
                             width={size}

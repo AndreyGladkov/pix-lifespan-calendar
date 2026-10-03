@@ -1,10 +1,11 @@
 import { describe, expect, it } from "vitest";
 import { ageAt, buildGrid, cellState, emptyPositions, type Cell, type YearBlock } from "../src/domain/grid";
 import { lifespan, type Lifespan } from "../src/domain/lifespan";
+import type { CellState } from "../src/domain/grid";
 
 const date = (iso: string): Date => new Date(`${iso}T00:00:00`);
 
-const life: Lifespan = { birth: date("1990-03-15"), expectedEnd: date("2060-03-15") };
+const life: Lifespan = { birth: date("1990-03-15"), expectedEnd: date("2060-03-15"), gained: null, lost: null };
 
 function cellByKey(blocks: YearBlock[], key: string): Cell {
     const cell = blocks.flatMap((block) => block.cells).find((c) => c.key === key);
@@ -48,7 +49,12 @@ describe("cellState", () => {
     });
 
     it("marks lived periods past the expected end as surplus", () => {
-        const shortLife: Lifespan = { birth: date("1940-01-01"), expectedEnd: date("2010-01-01") };
+        const shortLife: Lifespan = {
+            birth: date("1940-01-01"),
+            expectedEnd: date("2010-01-01"),
+            gained: null,
+            lost: null,
+        };
         expect(cellState({ start: date("2015-01-01"), end: date("2015-01-31") }, shortLife, today)).toBe("surplus");
     });
 });
@@ -94,7 +100,12 @@ describe("buildGrid", () => {
     });
 
     it("extends the grid to the current year when the expected end has passed", () => {
-        const shortLife: Lifespan = { birth: date("1940-01-01"), expectedEnd: date("2010-01-01") };
+        const shortLife: Lifespan = {
+            birth: date("1940-01-01"),
+            expectedEnd: date("2010-01-01"),
+            gained: null,
+            lost: null,
+        };
         const blocks = buildGrid("month", shortLife, today);
         expect(blocks.at(-1)?.year).toBe(2026);
         expect(cellByKey(blocks, "2026-09").state).toBe("surplus");
@@ -102,8 +113,54 @@ describe("buildGrid", () => {
     });
 
     it("ends at the year of the last expected day", () => {
-        const endsOnNewYear: Lifespan = { birth: date("1990-03-15"), expectedEnd: date("2061-01-01") };
+        const endsOnNewYear: Lifespan = {
+            birth: date("1990-03-15"),
+            expectedEnd: date("2061-01-01"),
+            gained: null,
+            lost: null,
+        };
         expect(buildGrid("month", endsOnNewYear, today).at(-1)?.year).toBe(2060);
+    });
+});
+
+describe("lifestyle marks", () => {
+    const today = date("2026-10-02");
+    const habits = lifespan(date("2000-01-01"), 60, { gained: { from: 50, to: 60 }, lost: { from: 60, to: 70 } });
+    const markOf = (key: string): { state: CellState; lifestyle: string | null } => {
+        const { state, lifestyle } = cellByKey(buildGrid("month", habits, today), key);
+        return { state, lifestyle };
+    };
+
+    it("converts year spans to dates after birth", () => {
+        expect(habits.gained).toEqual({ start: date("2049-12-31"), end: date("2060-01-01") });
+        expect(habits.lost).toEqual({ start: date("2060-01-01"), end: date("2069-12-31") });
+    });
+
+    it("marks future cells added by lifestyle", () => {
+        expect(markOf("2049-11")).toEqual({ state: "future", lifestyle: null });
+        expect(markOf("2049-12")).toEqual({ state: "future", lifestyle: "gained" });
+        expect(markOf("2059-11")).toEqual({ state: "future", lifestyle: "gained" });
+    });
+
+    it("extends the grid to the end of the years lifestyle took away", () => {
+        expect(buildGrid("month", habits, today).at(-1)?.year).toBe(2069);
+    });
+
+    it("marks cells after the end that lifestyle took away", () => {
+        expect(markOf("2060-01")).toEqual({ state: "outside", lifestyle: "lost" });
+        expect(markOf("2069-12")).toEqual({ state: "outside", lifestyle: "lost" });
+    });
+
+    it("never recolors lived or current cells", () => {
+        const early = lifespan(date("2000-01-01"), 60, { gained: { from: 10, to: 60 }, lost: null });
+        expect(cellByKey(buildGrid("month", early, today), "2015-01")).toMatchObject({
+            state: "lived",
+            lifestyle: null,
+        });
+        expect(cellByKey(buildGrid("month", early, today), "2026-10")).toMatchObject({
+            state: "current",
+            lifestyle: null,
+        });
     });
 });
 

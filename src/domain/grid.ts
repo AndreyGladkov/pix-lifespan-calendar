@@ -14,11 +14,13 @@ import {
     startOfISOWeekYear,
     subDays,
 } from "date-fns";
-import type { Lifespan } from "./lifespan";
+import type { DateRange, Lifespan } from "./lifespan";
 
 export type GridUnit = "day" | "week" | "month";
 
 export type CellState = "outside" | "lived" | "current" | "future" | "surplus";
+
+export type LifestyleMark = "gained" | "lost";
 
 export interface Cell {
     key: string;
@@ -27,6 +29,7 @@ export interface Cell {
     column: number;
     row: number;
     state: CellState;
+    lifestyle: LifestyleMark | null;
 }
 
 export interface YearBlock {
@@ -35,6 +38,8 @@ export interface YearBlock {
     rows: number;
     cells: Cell[];
 }
+
+export const CELLS_PER_YEAR: Record<GridUnit, number> = { day: 365.2425, week: 365.2425 / 7, month: 12 };
 
 export const GRID_SHAPE: Record<GridUnit, { columns: number; rows: number }> = {
     day: { columns: 53, rows: 7 },
@@ -55,6 +60,19 @@ export function cellState(period: Pick<Period, "start" | "end">, life: Lifespan,
     if (!isAfter(period.start, today) && !isBefore(period.end, today)) return "current";
     if (!isBefore(period.start, life.expectedEnd)) return isBefore(period.end, today) ? "surplus" : "outside";
     return isBefore(period.end, today) ? "lived" : "future";
+}
+
+const overlaps = (period: Pick<Period, "start" | "end">, range: DateRange | null): boolean =>
+    range !== null && isBefore(period.start, range.end) && !isBefore(period.end, range.start);
+
+export function lifestyleMark(
+    period: Pick<Period, "start" | "end">,
+    state: CellState,
+    life: Lifespan,
+): LifestyleMark | null {
+    if (state === "future" && overlaps(period, life.gained)) return "gained";
+    if (state === "outside" && overlaps(period, life.lost)) return "lost";
+    return null;
 }
 
 function isoWeekStart(isoYear: number, week: number): Date {
@@ -117,7 +135,7 @@ const YEAR_OF: Record<GridUnit, (date: Date) => number> = {
 
 export function buildGrid(unit: GridUnit, life: Lifespan, today: Date): YearBlock[] {
     const yearOf = YEAR_OF[unit];
-    const lastDay = max([subDays(life.expectedEnd, 1), today]);
+    const lastDay = max([subDays(life.expectedEnd, 1), today, ...(life.lost ? [subDays(life.lost.end, 1)] : [])]);
     const firstYear = yearOf(life.birth);
     const lastYear = yearOf(lastDay);
     return Array.from({ length: lastYear - firstYear + 1 }, (_, index) => {
@@ -125,7 +143,10 @@ export function buildGrid(unit: GridUnit, life: Lifespan, today: Date): YearBloc
         return {
             year,
             ...GRID_SHAPE[unit],
-            cells: PERIODS[unit](year).map((period) => ({ ...period, state: cellState(period, life, today) })),
+            cells: PERIODS[unit](year).map((period) => {
+                const state = cellState(period, life, today);
+                return { ...period, state, lifestyle: lifestyleMark(period, state, life) };
+            }),
         };
     });
 }

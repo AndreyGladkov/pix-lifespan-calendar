@@ -33,13 +33,22 @@ describe("estimateHint", () => {
     const en = createTranslator("en");
 
     it("explains an adjusted estimate", () => {
-        expect(estimateHint(en, { years: 68.2, estimate: adjusted, overridden: false })).toBe(
-            "Expected: 68.2 = WHO 74.8 − 10 smoking + 3.4 activity",
-        );
+        expect(
+            estimateHint(en, {
+                years: 68.2,
+                estimate: adjusted,
+                overridden: false,
+                spans: { gained: null, lost: null },
+            }),
+        ).toBe("Expected: 68.2 = WHO 74.8 − 10 smoking + 3.4 activity");
     });
 
     it("stays silent without adjustments or with a manual override", () => {
-        expect(estimateHint(en, { years: 80.1, estimate: plain, overridden: false })).toBeUndefined();
-        expect(estimateHint(en, { years: 85, estimate: adjusted, overridden: true })).toBeUndefined();
+        expect(
+            estimateHint(en, { years: 80.1, estimate: plain, overridden: false, spans: { gained: null, lost: null } }),
+        ).toBeUndefined();
+        expect(
+            estimateHint(en, { years: 85, estimate: adjusted, overridden: true, spans: { gained: null, lost: null } }),
+        ).toBeUndefined();
     });
 });
