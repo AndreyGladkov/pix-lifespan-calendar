@@ -27,7 +27,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@codemirror/state@npm:^6.7.0, @codemirror/state@npm:^6.7.6":
+"@codemirror/state@npm:6.5.0":
+  version: 6.5.0
+  resolution: "@codemirror/state@npm:6.5.0"
+  dependencies:
+    "@marijn/find-cluster-break": "npm:^1.0.0"
+  checksum: 10c0/740425d605d7b12524e3abef242a8ca0ea1a17bab97f7583221f89c56b8f2eb236f8a227885e2bb472662b328d2a32b972fbf8543096224711679dfc3a28b492
+  languageName: node
+  linkType: hard
+
+"@codemirror/state@npm:^6.5.0":
   version: 6.7.6
   resolution: "@codemirror/state@npm:6.7.6"
   dependencies:
@@ -36,15 +45,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@codemirror/view@npm:^6.43.13":
-  version: 6.43.13
-  resolution: "@codemirror/view@npm:6.43.13"
+"@codemirror/view@npm:6.38.6":
+  version: 6.38.6
+  resolution: "@codemirror/view@npm:6.38.6"
   dependencies:
-    "@codemirror/state": "npm:^6.7.0"
+    "@codemirror/state": "npm:^6.5.0"
     crelt: "npm:^1.0.6"
     style-mod: "npm:^4.1.0"
     w3c-keyname: "npm:^2.2.4"
-  checksum: 10c0/ea848cf146bd7ffdeefdc567858f5b632d176c9c27be151c1238241f696b602a463339f40b18024b185e321a19787eb8ab3be9da4ff1287f92e996330ae66228
+  checksum: 10c0/7faa6558a991faf8acb6a74dbe5e21b6e1a83f8ace7ec7b37e8250c4e1e9f152c40978588cf2d2609c8ad7126e05ce9cae052bf345232630c300d27ccfb87493
   languageName: node
   linkType: hard
 
@@ -3331,16 +3340,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"obsidian@npm:1.8.7":
-  version: 1.8.7
-  resolution: "obsidian@npm:1.8.7"
+"obsidian@npm:1.13.1":
+  version: 1.13.1
+  resolution: "obsidian@npm:1.13.1"
   dependencies:
     "@types/codemirror": "npm:5.60.8"
     moment: "npm:2.29.4"
   peerDependencies:
-    "@codemirror/state": ^6.0.0
-    "@codemirror/view": ^6.0.0
-  checksum: 10c0/b03fdaf5a2c950c9f737f2dcf830e90aa8e0565cb68f2ffcbe10dd5a02a642efa2a141095e18ee7d1ae50adbe7ab694f2e66094ebf88a7a36e7c329d034c1a05
+    "@codemirror/state": 6.5.0
+    "@codemirror/view": 6.38.6
+  checksum: 10c0/cc7bf4de68c36edfd7e3a348b45c8919d01bc6fb04b1f03fae74092156bf78add092f0f94c3885599fefbb3a83740630360044a1d899bd299c2016d345311521
   languageName: node
   linkType: hard
 
@@ -3443,8 +3452,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "pix-lifespan-calendar@workspace:."
   dependencies:
-    "@codemirror/state": "npm:^6.7.6"
-    "@codemirror/view": "npm:^6.43.13"
+    "@codemirror/state": "npm:6.5.0"
+    "@codemirror/view": "npm:6.38.6"
     "@eslint/js": "npm:^9"
     "@eslint/json": "npm:0.14.0"
     "@types/node": "npm:^26.6.3"
@@ -3457,7 +3466,7 @@ __metadata:
     eslint-plugin-obsidianmd: "npm:^0.4.2"
     globals: "npm:^17.13.0"
     i18n-iso-countries: "npm:^7.14.0"
-    obsidian: "npm:1.8.7"
+    obsidian: "npm:1.13.1"
     prettier: "npm:^3.9.9"
     react: "npm:18.3.1"
     react-dom: "npm:18.3.1"

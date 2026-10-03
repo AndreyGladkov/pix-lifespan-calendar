@@ -1,5 +1,13 @@
 import { format, parseISO } from "date-fns";
-import { PluginSettingTab, Setting, type App, type Plugin, type TextComponent } from "obsidian";
+import {
+    PluginSettingTab,
+    Setting,
+    type App,
+    type Plugin,
+    type SettingDefinition,
+    type SettingDefinitionItem,
+    type TextComponent,
+} from "obsidian";
 import { countryNamer } from "./countryNames";
 import { ageAt } from "./domain/grid";
 import { estimateLifeExpectancy, type LifeExpectancyData } from "./domain/lifeExpectancy";
@@ -42,11 +50,20 @@ const ACTIVITY_OPTIONS: ChoiceOptions<"activity"> = {
     "450plus": "activity450plus",
 };
 
+interface Row {
+    name?: MessageKey;
+    desc?: MessageKey;
+    render: (setting: Setting) => void | (() => void);
+}
+
+interface Section {
+    heading: MessageKey;
+    rows: Row[];
+}
+
 export class LifeCalendarSettingTab extends PluginSettingTab {
-    private lifeExpectancyText: TextComponent | null = null;
-    private lifestyleIgnoredEl: HTMLElement | null = null;
-    private unsubscribe: (() => void) | null = null;
     private readonly nameOfCountry: ReturnType<typeof countryNamer>;
+    private cleanups: (() => void)[] = [];
 
     constructor(
         app: App,
@@ -59,141 +76,203 @@ export class LifeCalendarSettingTab extends PluginSettingTab {
         this.nameOfCountry = countryNamer(translator.language);
     }
 
-    display(): void {
+    override getSettingDefinitions(): SettingDefinitionItem[] {
+        const { t } = this.translator;
+        const definition = (row: Row): SettingDefinition => ({
+            name: row.name ? t(row.name) : "",
+            desc: row.desc ? t(row.desc) : undefined,
+            searchable: row.name !== undefined,
+            render: (setting) => row.render(setting),
+        });
+        return this.layout().map((entry) =>
+            "heading" in entry
+                ? { type: "group", heading: t(entry.heading), items: entry.rows.map(definition) }
+                : definition(entry),
+        );
+    }
+
+    // Obsidian before 1.13 ignores getSettingDefinitions() and renders the tab through display().
+    override display(): void {
+        const { t } = this.translator;
+        this.runCleanups();
         this.containerEl.empty();
-        this.addBirthDate();
-        this.addCountry();
-        this.addChoice("sex", "sexName", "sexDesc", SEX_OPTIONS);
-        this.addLifestyle();
-        this.addLifeExpectancy();
-        this.addChoice("unit", "unitName", "unitDesc", UNIT_OPTIONS);
-        this.refreshLifeExpectancyHints();
-        this.unsubscribe?.();
-        this.unsubscribe = this.store.subscribe(() => this.refreshLifeExpectancyHints());
+        const render = (row: Row): void => {
+            const setting = new Setting(this.containerEl);
+            if (row.name) setting.setName(t(row.name));
+            if (row.desc) setting.setDesc(t(row.desc));
+            const cleanup = row.render(setting);
+            if (cleanup) this.cleanups.push(cleanup);
+        };
+        for (const entry of this.layout()) {
+            if (!("heading" in entry)) {
+                render(entry);
+                continue;
+            }
+            new Setting(this.containerEl).setName(t(entry.heading)).setHeading();
+            entry.rows.forEach(render);
+        }
     }
 
     override hide(): void {
-        this.unsubscribe?.();
-        this.unsubscribe = null;
+        this.runCleanups();
         super.hide();
     }
 
-    private addBirthDate(): void {
-        const { t } = this.translator;
-        const setting = new Setting(this.containerEl).setName(t("birthDateName")).setDesc(t("birthDateDesc"));
-        const showError = errorMessage(setting, t("birthDateError"));
-        setting.addText((text) => {
-            text.inputEl.type = "date";
-            text.inputEl.max = format(new Date(), "yyyy-MM-dd");
-            text.setValue(this.store.get().birthDate ?? "");
-            text.onChange((value) =>
-                saveValidated(parseBirthDate(value, new Date()), showError, (birthDate) =>
-                    this.store.update({ birthDate }),
-                ),
-            );
-        });
+    private runCleanups(): void {
+        this.cleanups.forEach((cleanup) => cleanup());
+        this.cleanups = [];
     }
 
-    private addCountry(): void {
-        const { t, language } = this.translator;
-        const countries = this.data.countries
-            .map((country) => ({ iso3: country.iso3, name: this.nameOfCountry(country) }))
-            .sort((a, b) => a.name.localeCompare(b.name, language));
-        new Setting(this.containerEl)
-            .setName(t("countryName"))
-            .setDesc(t("countryDesc"))
-            .addDropdown((dropdown) => {
-                dropdown.addOption("", t("countryWorld"));
-                for (const country of countries) dropdown.addOption(country.iso3, country.name);
-                dropdown.setValue(this.store.get().country ?? "");
-                dropdown.onChange((value) => void this.store.update({ country: value === "" ? null : value }));
-            });
+    private layout(): (Row | Section)[] {
+        return [
+            this.birthDateRow(),
+            this.countryRow(),
+            this.choiceRow("sex", "sexName", "sexDesc", SEX_OPTIONS),
+            {
+                heading: "lifestyleHeading",
+                rows: [
+                    this.lifestyleNoteRow(),
+                    this.choiceRow("smoking", "smokingName", "smokingDesc", SMOKING_OPTIONS),
+                    this.quitAgeRow(),
+                    this.choiceRow("alcohol", "alcoholName", "alcoholDesc", ALCOHOL_OPTIONS),
+                    this.choiceRow("activity", "activityName", "activityDesc", ACTIVITY_OPTIONS),
+                ],
+            },
+            this.lifeExpectancyRow(),
+            this.choiceRow("unit", "unitName", "unitDesc", UNIT_OPTIONS),
+        ];
     }
 
-    private addLifestyle(): void {
-        const { t } = this.translator;
-        const heading = new Setting(this.containerEl)
-            .setName(t("lifestyleHeading"))
-            .setDesc(t("lifestyleDesc"))
-            .setHeading();
-        this.lifestyleIgnoredEl = heading.descEl.createDiv({
-            cls: "pix-lifespan-calendar-warning",
-            text: t("lifestyleIgnored"),
-        });
-
-        this.addChoice("smoking", "smokingName", "smokingDesc", SMOKING_OPTIONS, (smoking) =>
-            quitAge.settingEl.toggle(smoking === "former"),
-        );
-        const quitAge = this.addQuitAge();
-        quitAge.settingEl.toggle(this.store.get().smoking === "former");
-        this.addChoice("alcohol", "alcoholName", "alcoholDesc", ALCOHOL_OPTIONS);
-        this.addChoice("activity", "activityName", "activityDesc", ACTIVITY_OPTIONS);
-    }
-
-    private addQuitAge(): Setting {
-        const { t } = this.translator;
-        const setting = new Setting(this.containerEl).setName(t("quitAgeName")).setDesc(t("quitAgeDesc"));
-        const showError = errorMessage(setting, t("quitAgeError"));
-        setting.addText((text) => {
-            text.inputEl.type = "number";
-            text.inputEl.inputMode = "numeric";
-            text.setValue(this.store.get().smokingQuitAge?.toString() ?? "");
-            text.onChange((value) =>
-                saveValidated(parseQuitAge(value, this.currentAge()), showError, (smokingQuitAge) =>
-                    this.store.update({ smokingQuitAge }),
-                ),
-            );
-        });
-        return setting;
-    }
-
-    private addLifeExpectancy(): void {
-        const { t } = this.translator;
-        const setting = new Setting(this.containerEl).setName(t("lifeExpectancyName")).setDesc(t("lifeExpectancyDesc"));
-        const showError = errorMessage(setting, t("lifeExpectancyError"));
-        setting.addText((text) => {
-            this.lifeExpectancyText = text;
-            text.inputEl.inputMode = "decimal";
-            const override = this.store.get().lifeExpectancyOverride;
-            text.setValue(override === null ? "" : formatYears(this.translator, override));
-            text.onChange((value) =>
-                saveValidated(parseLifeExpectancy(value), showError, (lifeExpectancyOverride) =>
-                    this.store.update({ lifeExpectancyOverride }),
-                ),
-            );
-        });
-        setting.addExtraButton((button) =>
-            button
-                .setIcon("rotate-ccw")
-                .setTooltip(t("lifeExpectancyReset"))
-                .onClick(() => {
-                    this.lifeExpectancyText?.setValue("");
-                    showError(false);
-                    void this.store.update({ lifeExpectancyOverride: null });
-                }),
-        );
-    }
-
-    private addChoice<K extends ChoiceKey>(
-        key: K,
-        name: MessageKey,
-        description: MessageKey,
-        options: ChoiceOptions<K>,
-        onChange?: (value: LifeCalendarSettings[K]) => void,
-    ): void {
-        const { t } = this.translator;
-        new Setting(this.containerEl)
-            .setName(t(name))
-            .setDesc(t(description))
-            .addDropdown((dropdown) => {
-                for (const [option, label] of Object.entries<MessageKey>(options)) dropdown.addOption(option, t(label));
-                dropdown.setValue(this.store.get()[key]);
-                dropdown.onChange((selected) => {
-                    const value = selected as LifeCalendarSettings[K];
-                    onChange?.(value);
-                    void this.store.update({ [key]: value });
+    private birthDateRow(): Row {
+        return {
+            name: "birthDateName",
+            desc: "birthDateDesc",
+            render: (setting) => {
+                const showError = errorMessage(setting, this.translator.t("birthDateError"));
+                setting.addText((text) => {
+                    text.inputEl.type = "date";
+                    text.inputEl.max = format(new Date(), "yyyy-MM-dd");
+                    text.setValue(this.store.get().birthDate ?? "");
+                    text.onChange((value) =>
+                        saveValidated(parseBirthDate(value, new Date()), showError, (birthDate) =>
+                            this.store.update({ birthDate }),
+                        ),
+                    );
                 });
-            });
+            },
+        };
+    }
+
+    private countryRow(): Row {
+        return {
+            name: "countryName",
+            desc: "countryDesc",
+            render: (setting) => {
+                const { t, language } = this.translator;
+                const countries = this.data.countries
+                    .map((country) => ({ iso3: country.iso3, name: this.nameOfCountry(country) }))
+                    .sort((a, b) => a.name.localeCompare(b.name, language));
+                setting.addDropdown((dropdown) => {
+                    dropdown.addOption("", t("countryWorld"));
+                    for (const country of countries) dropdown.addOption(country.iso3, country.name);
+                    dropdown.setValue(this.store.get().country ?? "");
+                    dropdown.onChange((value) => void this.store.update({ country: value === "" ? null : value }));
+                });
+            },
+        };
+    }
+
+    private lifestyleNoteRow(): Row {
+        return {
+            desc: "lifestyleDesc",
+            render: (setting) => {
+                const ignoredEl = setting.descEl.createDiv({
+                    cls: "pix-lifespan-calendar-warning",
+                    text: this.translator.t("lifestyleIgnored"),
+                });
+                return this.watch(() => ignoredEl.toggle(this.store.get().lifeExpectancyOverride !== null));
+            },
+        };
+    }
+
+    private quitAgeRow(): Row {
+        return {
+            name: "quitAgeName",
+            desc: "quitAgeDesc",
+            render: (setting) => {
+                const showError = errorMessage(setting, this.translator.t("quitAgeError"));
+                setting.addText((text) => {
+                    text.inputEl.type = "number";
+                    text.inputEl.inputMode = "numeric";
+                    text.setValue(this.store.get().smokingQuitAge?.toString() ?? "");
+                    text.onChange((value) =>
+                        saveValidated(parseQuitAge(value, this.currentAge()), showError, (smokingQuitAge) =>
+                            this.store.update({ smokingQuitAge }),
+                        ),
+                    );
+                });
+                return this.watch(() => setting.settingEl.toggle(this.store.get().smoking === "former"));
+            },
+        };
+    }
+
+    private lifeExpectancyRow(): Row {
+        return {
+            name: "lifeExpectancyName",
+            desc: "lifeExpectancyDesc",
+            render: (setting) => {
+                const showError = errorMessage(setting, this.translator.t("lifeExpectancyError"));
+                let input: TextComponent | null = null;
+                setting.addText((text) => {
+                    input = text;
+                    text.inputEl.inputMode = "decimal";
+                    const override = this.store.get().lifeExpectancyOverride;
+                    text.setValue(override === null ? "" : formatYears(this.translator, override));
+                    text.onChange((value) =>
+                        saveValidated(parseLifeExpectancy(value), showError, (lifeExpectancyOverride) =>
+                            this.store.update({ lifeExpectancyOverride }),
+                        ),
+                    );
+                });
+                setting.addExtraButton((button) =>
+                    button
+                        .setIcon("rotate-ccw")
+                        .setTooltip(this.translator.t("lifeExpectancyReset"))
+                        .onClick(() => {
+                            input?.setValue("");
+                            showError(false);
+                            void this.store.update({ lifeExpectancyOverride: null });
+                        }),
+                );
+                return this.watch(() => {
+                    input?.setPlaceholder(this.estimatePlaceholder());
+                });
+            },
+        };
+    }
+
+    private choiceRow<K extends ChoiceKey>(key: K, name: MessageKey, desc: MessageKey, options: ChoiceOptions<K>): Row {
+        return {
+            name,
+            desc,
+            render: (setting) => {
+                const { t } = this.translator;
+                setting.addDropdown((dropdown) => {
+                    for (const [option, label] of Object.entries<MessageKey>(options)) {
+                        dropdown.addOption(option, t(label));
+                    }
+                    dropdown.setValue(this.store.get()[key]);
+                    dropdown.onChange(
+                        (selected) => void this.store.update({ [key]: selected as LifeCalendarSettings[K] }),
+                    );
+                });
+            },
+        };
+    }
+
+    private watch(apply: () => void): () => void {
+        apply();
+        return this.store.subscribe(apply);
     }
 
     private currentAge(): number | null {
@@ -201,14 +280,12 @@ export class LifeCalendarSettingTab extends PluginSettingTab {
         return birthDate === null ? null : ageAt(new Date(), parseISO(birthDate));
     }
 
-    private refreshLifeExpectancyHints(): void {
-        const settings = this.store.get();
-        const estimate = estimateLifeExpectancy(this.data, settings);
+    private estimatePlaceholder(): string {
+        const estimate = estimateLifeExpectancy(this.data, this.store.get());
         const place = estimate.country
             ? this.nameOfCountry(estimate.country)
             : this.translator.t("lifeExpectancyWorld");
-        this.lifeExpectancyText?.setPlaceholder(estimatePlaceholder(this.translator, estimate, place));
-        this.lifestyleIgnoredEl?.toggle(settings.lifeExpectancyOverride !== null);
+        return estimatePlaceholder(this.translator, estimate, place);
     }
 }
 
