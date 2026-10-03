@@ -1,0 +1,1675 @@
+{
+  "world": {
+    "year": 2023,
+    "both": 73.3,
+    "male": 70.6,
+    "female": 76.1
+  },
+  "countries": [
+    {
+      "iso3": "AFG",
+      "iso2": "AF",
+      "name": "Afghanistan",
+      "year": 2023,
+      "both": 64.5,
+      "male": 64.4,
+      "female": 64.7
+    },
+    {
+      "iso3": "AGO",
+      "iso2": "AO",
+      "name": "Angola",
+      "year": 2023,
+      "both": 65,
+      "male": 62.7,
+      "female": 67.4
+    },
+    {
+      "iso3": "ALB",
+      "iso2": "AL",
+      "name": "Albania",
+      "year": 2023,
+      "both": 79.3,
+      "male": 76.8,
+      "female": 81.7
+    },
+    {
+      "iso3": "ARE",
+      "iso2": "AE",
+      "name": "United Arab Emirates",
+      "year": 2023,
+      "both": 82.7,
+      "male": 82.2,
+      "female": 83.7
+    },
+    {
+      "iso3": "ARG",
+      "iso2": "AR",
+      "name": "Argentina",
+      "year": 2023,
+      "both": 77.2,
+      "male": 74.6,
+      "female": 79.7
+    },
+    {
+      "iso3": "ARM",
+      "iso2": "AM",
+      "name": "Armenia",
+      "year": 2023,
+      "both": 77,
+      "male": 72.9,
+      "female": 80.6
+    },
+    {
+      "iso3": "ATG",
+      "iso2": "AG",
+      "name": "Antigua and Barbuda",
+      "year": 2023,
+      "both": 78.4,
+      "male": 75.6,
+      "female": 80.8
+    },
+    {
+      "iso3": "AUS",
+      "iso2": "AU",
+      "name": "Australia",
+      "year": 2023,
+      "both": 83,
+      "male": 81.2,
+      "female": 84.8
+    },
+    {
+      "iso3": "AUT",
+      "iso2": "AT",
+      "name": "Austria",
+      "year": 2023,
+      "both": 81.8,
+      "male": 79.5,
+      "female": 84
+    },
+    {
+      "iso3": "AZE",
+      "iso2": "AZ",
+      "name": "Azerbaijan",
+      "year": 2023,
+      "both": 75.5,
+      "male": 72.2,
+      "female": 78.5
+    },
+    {
+      "iso3": "BDI",
+      "iso2": "BI",
+      "name": "Burundi",
+      "year": 2023,
+      "both": 65.7,
+      "male": 63.5,
+      "female": 67.9
+    },
+    {
+      "iso3": "BEL",
+      "iso2": "BE",
+      "name": "Belgium",
+      "year": 2023,
+      "both": 82.2,
+      "male": 80.3,
+      "female": 84.1
+    },
+    {
+      "iso3": "BEN",
+      "iso2": "BJ",
+      "name": "Benin",
+      "year": 2023,
+      "both": 65,
+      "male": 62.5,
+      "female": 67.6
+    },
+    {
+      "iso3": "BFA",
+      "iso2": "BF",
+      "name": "Burkina Faso",
+      "year": 2023,
+      "both": 64.1,
+      "male": 61.2,
+      "female": 67
+    },
+    {
+      "iso3": "BGD",
+      "iso2": "BD",
+      "name": "Bangladesh",
+      "year": 2023,
+      "both": 72.7,
+      "male": 71.1,
+      "female": 74.4
+    },
+    {
+      "iso3": "BGR",
+      "iso2": "BG",
+      "name": "Bulgaria",
+      "year": 2023,
+      "both": 75.6,
+      "male": 71.9,
+      "female": 79.4
+    },
+    {
+      "iso3": "BHR",
+      "iso2": "BH",
+      "name": "Bahrain",
+      "year": 2023,
+      "both": 81.3,
+      "male": 83.6,
+      "female": 78.1
+    },
+    {
+      "iso3": "BHS",
+      "iso2": "BS",
+      "name": "Bahamas",
+      "year": 2023,
+      "both": 74.7,
+      "male": 71.7,
+      "female": 77.5
+    },
+    {
+      "iso3": "BIH",
+      "iso2": "BA",
+      "name": "Bosnia and Herzegovina",
+      "year": 2023,
+      "both": 78.7,
+      "male": 76.2,
+      "female": 80.9
+    },
+    {
+      "iso3": "BLR",
+      "iso2": "BY",
+      "name": "Belarus",
+      "year": 2023,
+      "both": 74.7,
+      "male": 69.7,
+      "female": 79.5
+    },
+    {
+      "iso3": "BLZ",
+      "iso2": "BZ",
+      "name": "Belize",
+      "year": 2023,
+      "both": 71.9,
+      "male": 69.5,
+      "female": 74.4
+    },
+    {
+      "iso3": "BOL",
+      "iso2": "BO",
+      "name": "Bolivia (Plurinational State of)",
+      "year": 2023,
+      "both": 73.1,
+      "male": 71.1,
+      "female": 75.1
+    },
+    {
+      "iso3": "BRA",
+      "iso2": "BR",
+      "name": "Brazil",
+      "year": 2023,
+      "both": 75.9,
+      "male": 72.8,
+      "female": 79
+    },
+    {
+      "iso3": "BRB",
+      "iso2": "BB",
+      "name": "Barbados",
+      "year": 2023,
+      "both": 79.1,
+      "male": 76.7,
+      "female": 81.3
+    },
+    {
+      "iso3": "BRN",
+      "iso2": "BN",
+      "name": "Brunei Darussalam",
+      "year": 2023,
+      "both": 76.3,
+      "male": 74.9,
+      "female": 77.8
+    },
+    {
+      "iso3": "BTN",
+      "iso2": "BT",
+      "name": "Bhutan",
+      "year": 2023,
+      "both": 75.3,
+      "male": 73.9,
+      "female": 76.9
+    },
+    {
+      "iso3": "BWA",
+      "iso2": "BW",
+      "name": "Botswana",
+      "year": 2023,
+      "both": 67.6,
+      "male": 65.3,
+      "female": 70.1
+    },
+    {
+      "iso3": "CAF",
+      "iso2": "CF",
+      "name": "Central African Republic",
+      "year": 2023,
+      "both": 52.7,
+      "male": 48.9,
+      "female": 56.3
+    },
+    {
+      "iso3": "CAN",
+      "iso2": "CA",
+      "name": "Canada",
+      "year": 2023,
+      "both": 81.4,
+      "male": 79.3,
+      "female": 83.4
+    },
+    {
+      "iso3": "CHE",
+      "iso2": "CH",
+      "name": "Switzerland",
+      "year": 2023,
+      "both": 83.8,
+      "male": 82.2,
+      "female": 85.4
+    },
+    {
+      "iso3": "CHL",
+      "iso2": "CL",
+      "name": "Chile",
+      "year": 2023,
+      "both": 81.1,
+      "male": 79.1,
+      "female": 83.1
+    },
+    {
+      "iso3": "CHN",
+      "iso2": "CN",
+      "name": "China",
+      "year": 2023,
+      "both": 77.9,
+      "male": 75,
+      "female": 81.1
+    },
+    {
+      "iso3": "CIV",
+      "iso2": "CI",
+      "name": "Cote d'Ivoire",
+      "year": 2023,
+      "both": 65.3,
+      "male": 62.8,
+      "female": 68.1
+    },
+    {
+      "iso3": "CMR",
+      "iso2": "CM",
+      "name": "Cameroon",
+      "year": 2023,
+      "both": 64.6,
+      "male": 62.3,
+      "female": 66.9
+    },
+    {
+      "iso3": "COD",
+      "iso2": "CD",
+      "name": "Democratic Republic of the Congo",
+      "year": 2023,
+      "both": 62.1,
+      "male": 59.4,
+      "female": 65
+    },
+    {
+      "iso3": "COG",
+      "iso2": "CG",
+      "name": "Congo",
+      "year": 2023,
+      "both": 65.3,
+      "male": 64.2,
+      "female": 66.4
+    },
+    {
+      "iso3": "COL",
+      "iso2": "CO",
+      "name": "Colombia",
+      "year": 2023,
+      "both": 78.2,
+      "male": 75.4,
+      "female": 81
+    },
+    {
+      "iso3": "COM",
+      "iso2": "KM",
+      "name": "Comoros",
+      "year": 2023,
+      "both": 69.6,
+      "male": 68.1,
+      "female": 71.2
+    },
+    {
+      "iso3": "CPV",
+      "iso2": "CV",
+      "name": "Cabo Verde",
+      "year": 2023,
+      "both": 76.2,
+      "male": 71.8,
+      "female": 80.8
+    },
+    {
+      "iso3": "CRI",
+      "iso2": "CR",
+      "name": "Costa Rica",
+      "year": 2023,
+      "both": 79.8,
+      "male": 76.8,
+      "female": 82.8
+    },
+    {
+      "iso3": "CUB",
+      "iso2": "CU",
+      "name": "Cuba",
+      "year": 2023,
+      "both": 77.2,
+      "male": 74.6,
+      "female": 79.8
+    },
+    {
+      "iso3": "CYP",
+      "iso2": "CY",
+      "name": "Cyprus",
+      "year": 2023,
+      "both": 82,
+      "male": 80,
+      "female": 84
+    },
+    {
+      "iso3": "CZE",
+      "iso2": "CZ",
+      "name": "Czechia",
+      "year": 2023,
+      "both": 79.7,
+      "male": 76.8,
+      "female": 82.5
+    },
+    {
+      "iso3": "DEU",
+      "iso2": "DE",
+      "name": "Germany",
+      "year": 2023,
+      "both": 81,
+      "male": 78.8,
+      "female": 83.2
+    },
+    {
+      "iso3": "DJI",
+      "iso2": "DJ",
+      "name": "Djibouti",
+      "year": 2023,
+      "both": 66.7,
+      "male": 64.9,
+      "female": 68.6
+    },
+    {
+      "iso3": "DNK",
+      "iso2": "DK",
+      "name": "Denmark",
+      "year": 2023,
+      "both": 82.1,
+      "male": 80.4,
+      "female": 83.9
+    },
+    {
+      "iso3": "DOM",
+      "iso2": "DO",
+      "name": "Dominican Republic",
+      "year": 2023,
+      "both": 75.4,
+      "male": 71.2,
+      "female": 79.8
+    },
+    {
+      "iso3": "DZA",
+      "iso2": "DZ",
+      "name": "Algeria",
+      "year": 2023,
+      "both": 77.8,
+      "male": 76.4,
+      "female": 79.2
+    },
+    {
+      "iso3": "ECU",
+      "iso2": "EC",
+      "name": "Ecuador",
+      "year": 2023,
+      "both": 77.6,
+      "male": 74.2,
+      "female": 81.2
+    },
+    {
+      "iso3": "EGY",
+      "iso2": "EG",
+      "name": "Egypt",
+      "year": 2023,
+      "both": 71.9,
+      "male": 69.6,
+      "female": 74.4
+    },
+    {
+      "iso3": "ERI",
+      "iso2": "ER",
+      "name": "Eritrea",
+      "year": 2023,
+      "both": 65.3,
+      "male": 62.3,
+      "female": 68.3
+    },
+    {
+      "iso3": "ESP",
+      "iso2": "ES",
+      "name": "Spain",
+      "year": 2023,
+      "both": 83.3,
+      "male": 80.8,
+      "female": 85.7
+    },
+    {
+      "iso3": "EST",
+      "iso2": "EE",
+      "name": "Estonia",
+      "year": 2023,
+      "both": 79.3,
+      "male": 75,
+      "female": 83.1
+    },
+    {
+      "iso3": "ETH",
+      "iso2": "ET",
+      "name": "Ethiopia",
+      "year": 2023,
+      "both": 68.7,
+      "male": 66.8,
+      "female": 70.6
+    },
+    {
+      "iso3": "FIN",
+      "iso2": "FI",
+      "name": "Finland",
+      "year": 2023,
+      "both": 81.1,
+      "male": 78.7,
+      "female": 83.5
+    },
+    {
+      "iso3": "FJI",
+      "iso2": "FJ",
+      "name": "Fiji",
+      "year": 2023,
+      "both": 68.5,
+      "male": 66.2,
+      "female": 71
+    },
+    {
+      "iso3": "FRA",
+      "iso2": "FR",
+      "name": "France",
+      "year": 2023,
+      "both": 82.5,
+      "male": 79.9,
+      "female": 85
+    },
+    {
+      "iso3": "FSM",
+      "iso2": "FM",
+      "name": "Micronesia (Federated States of)",
+      "year": 2023,
+      "both": 66.2,
+      "male": 63.2,
+      "female": 69.1
+    },
+    {
+      "iso3": "GAB",
+      "iso2": "GA",
+      "name": "Gabon",
+      "year": 2023,
+      "both": 67.4,
+      "male": 64.4,
+      "female": 71.1
+    },
+    {
+      "iso3": "GBR",
+      "iso2": "GB",
+      "name": "United Kingdom of Great Britain and Northern Ireland",
+      "year": 2023,
+      "both": 80.7,
+      "male": 78.9,
+      "female": 82.6
+    },
+    {
+      "iso3": "GEO",
+      "iso2": "GE",
+      "name": "Georgia",
+      "year": 2023,
+      "both": 75.1,
+      "male": 69.9,
+      "female": 80
+    },
+    {
+      "iso3": "GHA",
+      "iso2": "GH",
+      "name": "Ghana",
+      "year": 2023,
+      "both": 67.7,
+      "male": 65.1,
+      "female": 70.5
+    },
+    {
+      "iso3": "GIN",
+      "iso2": "GN",
+      "name": "Guinea",
+      "year": 2023,
+      "both": 62.6,
+      "male": 61,
+      "female": 64.1
+    },
+    {
+      "iso3": "GMB",
+      "iso2": "GM",
+      "name": "Gambia",
+      "year": 2023,
+      "both": 66.6,
+      "male": 64.3,
+      "female": 68.9
+    },
+    {
+      "iso3": "GNB",
+      "iso2": "GW",
+      "name": "Guinea-Bissau",
+      "year": 2023,
+      "both": 61,
+      "male": 58.1,
+      "female": 63.8
+    },
+    {
+      "iso3": "GNQ",
+      "iso2": "GQ",
+      "name": "Equatorial Guinea",
+      "year": 2023,
+      "both": 63.8,
+      "male": 62.8,
+      "female": 65
+    },
+    {
+      "iso3": "GRC",
+      "iso2": "GR",
+      "name": "Greece",
+      "year": 2023,
+      "both": 81.9,
+      "male": 78.9,
+      "female": 85
+    },
+    {
+      "iso3": "GRD",
+      "iso2": "GD",
+      "name": "Grenada",
+      "year": 2023,
+      "both": 73.4,
+      "male": 70.7,
+      "female": 76.4
+    },
+    {
+      "iso3": "GTM",
+      "iso2": "GT",
+      "name": "Guatemala",
+      "year": 2023,
+      "both": 71.6,
+      "male": 69,
+      "female": 74.1
+    },
+    {
+      "iso3": "GUY",
+      "iso2": "GY",
+      "name": "Guyana",
+      "year": 2023,
+      "both": 60.4,
+      "male": 56.4,
+      "female": 64.7
+    },
+    {
+      "iso3": "HND",
+      "iso2": "HN",
+      "name": "Honduras",
+      "year": 2023,
+      "both": 72.3,
+      "male": 71.3,
+      "female": 73.4
+    },
+    {
+      "iso3": "HRV",
+      "iso2": "HR",
+      "name": "Croatia",
+      "year": 2023,
+      "both": 78.6,
+      "male": 75.3,
+      "female": 81.9
+    },
+    {
+      "iso3": "HTI",
+      "iso2": "HT",
+      "name": "Haiti",
+      "year": 2023,
+      "both": 64.6,
+      "male": 63.3,
+      "female": 65.9
+    },
+    {
+      "iso3": "HUN",
+      "iso2": "HU",
+      "name": "Hungary",
+      "year": 2023,
+      "both": 76.7,
+      "male": 73.4,
+      "female": 79.7
+    },
+    {
+      "iso3": "IDN",
+      "iso2": "ID",
+      "name": "Indonesia",
+      "year": 2023,
+      "both": 72.7,
+      "male": 69.8,
+      "female": 75.8
+    },
+    {
+      "iso3": "IND",
+      "iso2": "IN",
+      "name": "India",
+      "year": 2023,
+      "both": 71,
+      "male": 69.3,
+      "female": 72.8
+    },
+    {
+      "iso3": "IRL",
+      "iso2": "IE",
+      "name": "Ireland",
+      "year": 2023,
+      "both": 82.4,
+      "male": 80.8,
+      "female": 84
+    },
+    {
+      "iso3": "IRN",
+      "iso2": "IR",
+      "name": "Iran (Islamic Republic of)",
+      "year": 2023,
+      "both": 77.7,
+      "male": 75.4,
+      "female": 80.1
+    },
+    {
+      "iso3": "IRQ",
+      "iso2": "IQ",
+      "name": "Iraq",
+      "year": 2023,
+      "both": 73.7,
+      "male": 71.2,
+      "female": 76.1
+    },
+    {
+      "iso3": "ISL",
+      "iso2": "IS",
+      "name": "Iceland",
+      "year": 2023,
+      "both": 81.8,
+      "male": 80.4,
+      "female": 83.3
+    },
+    {
+      "iso3": "ISR",
+      "iso2": "IL",
+      "name": "Israel",
+      "year": 2023,
+      "both": 82.6,
+      "male": 80.2,
+      "female": 84.9
+    },
+    {
+      "iso3": "ITA",
+      "iso2": "IT",
+      "name": "Italy",
+      "year": 2023,
+      "both": 82.9,
+      "male": 81,
+      "female": 84.8
+    },
+    {
+      "iso3": "JAM",
+      "iso2": "JM",
+      "name": "Jamaica",
+      "year": 2023,
+      "both": 72.6,
+      "male": 70.2,
+      "female": 75.1
+    },
+    {
+      "iso3": "JOR",
+      "iso2": "JO",
+      "name": "Jordan",
+      "year": 2023,
+      "both": 80.6,
+      "male": 79.2,
+      "female": 82
+    },
+    {
+      "iso3": "JPN",
+      "iso2": "JP",
+      "name": "Japan",
+      "year": 2023,
+      "both": 83.9,
+      "male": 81.2,
+      "female": 86.5
+    },
+    {
+      "iso3": "KAZ",
+      "iso2": "KZ",
+      "name": "Kazakhstan",
+      "year": 2023,
+      "both": 74.8,
+      "male": 70.4,
+      "female": 78.8
+    },
+    {
+      "iso3": "KEN",
+      "iso2": "KE",
+      "name": "Kenya",
+      "year": 2023,
+      "both": 67.6,
+      "male": 64.6,
+      "female": 70.8
+    },
+    {
+      "iso3": "KGZ",
+      "iso2": "KG",
+      "name": "Kyrgyzstan",
+      "year": 2023,
+      "both": 75.1,
+      "male": 72.1,
+      "female": 78
+    },
+    {
+      "iso3": "KHM",
+      "iso2": "KH",
+      "name": "Cambodia",
+      "year": 2023,
+      "both": 71.2,
+      "male": 68.4,
+      "female": 73.8
+    },
+    {
+      "iso3": "KIR",
+      "iso2": "KI",
+      "name": "Kiribati",
+      "year": 2023,
+      "both": 62.3,
+      "male": 58.8,
+      "female": 66
+    },
+    {
+      "iso3": "KOR",
+      "iso2": "KR",
+      "name": "Republic of Korea",
+      "year": 2023,
+      "both": 83.6,
+      "male": 80.6,
+      "female": 86.5
+    },
+    {
+      "iso3": "KWT",
+      "iso2": "KW",
+      "name": "Kuwait",
+      "year": 2023,
+      "both": 82.3,
+      "male": 81.5,
+      "female": 83.2
+    },
+    {
+      "iso3": "LAO",
+      "iso2": "LA",
+      "name": "Lao People's Democratic Republic",
+      "year": 2023,
+      "both": 69.7,
+      "male": 67.3,
+      "female": 72.3
+    },
+    {
+      "iso3": "LBN",
+      "iso2": "LB",
+      "name": "Lebanon",
+      "year": 2023,
+      "both": 78.5,
+      "male": 76,
+      "female": 80.9
+    },
+    {
+      "iso3": "LBR",
+      "iso2": "LR",
+      "name": "Liberia",
+      "year": 2023,
+      "both": 63.4,
+      "male": 62.1,
+      "female": 64.7
+    },
+    {
+      "iso3": "LBY",
+      "iso2": "LY",
+      "name": "Libya",
+      "year": 2023,
+      "both": 69.1,
+      "male": 68.4,
+      "female": 69.7
+    },
+    {
+      "iso3": "LCA",
+      "iso2": "LC",
+      "name": "Saint Lucia",
+      "year": 2023,
+      "both": 72.2,
+      "male": 67.7,
+      "female": 77.4
+    },
+    {
+      "iso3": "LKA",
+      "iso2": "LK",
+      "name": "Sri Lanka",
+      "year": 2023,
+      "both": 76.2,
+      "male": 72.5,
+      "female": 79.8
+    },
+    {
+      "iso3": "LSO",
+      "iso2": "LS",
+      "name": "Lesotho",
+      "year": 2023,
+      "both": 55.3,
+      "male": 51.9,
+      "female": 59
+    },
+    {
+      "iso3": "LTU",
+      "iso2": "LT",
+      "name": "Lithuania",
+      "year": 2023,
+      "both": 77.3,
+      "male": 72.8,
+      "female": 81.5
+    },
+    {
+      "iso3": "LUX",
+      "iso2": "LU",
+      "name": "Luxembourg",
+      "year": 2023,
+      "both": 83.6,
+      "male": 82,
+      "female": 85.1
+    },
+    {
+      "iso3": "LVA",
+      "iso2": "LV",
+      "name": "Latvia",
+      "year": 2023,
+      "both": 75.7,
+      "male": 70.8,
+      "female": 80.5
+    },
+    {
+      "iso3": "MAR",
+      "iso2": "MA",
+      "name": "Morocco",
+      "year": 2023,
+      "both": 75.2,
+      "male": 74.4,
+      "female": 76
+    },
+    {
+      "iso3": "MDA",
+      "iso2": "MD",
+      "name": "Republic of Moldova",
+      "year": 2023,
+      "both": 71.6,
+      "male": 67.1,
+      "female": 76
+    },
+    {
+      "iso3": "MDG",
+      "iso2": "MG",
+      "name": "Madagascar",
+      "year": 2023,
+      "both": 64.4,
+      "male": 63.1,
+      "female": 65.7
+    },
+    {
+      "iso3": "MDV",
+      "iso2": "MV",
+      "name": "Maldives",
+      "year": 2023,
+      "both": 79.4,
+      "male": 77.7,
+      "female": 81.9
+    },
+    {
+      "iso3": "MEX",
+      "iso2": "MX",
+      "name": "Mexico",
+      "year": 2023,
+      "both": 75.3,
+      "male": 72.3,
+      "female": 78.3
+    },
+    {
+      "iso3": "MKD",
+      "iso2": "MK",
+      "name": "North Macedonia",
+      "year": 2023,
+      "both": 77.2,
+      "male": 75.1,
+      "female": 79.2
+    },
+    {
+      "iso3": "MLI",
+      "iso2": "ML",
+      "name": "Mali",
+      "year": 2023,
+      "both": 64.4,
+      "male": 63.3,
+      "female": 65.5
+    },
+    {
+      "iso3": "MLT",
+      "iso2": "MT",
+      "name": "Malta",
+      "year": 2023,
+      "both": 82.5,
+      "male": 80.7,
+      "female": 84.2
+    },
+    {
+      "iso3": "MMR",
+      "iso2": "MM",
+      "name": "Myanmar",
+      "year": 2023,
+      "both": 69.4,
+      "male": 65.9,
+      "female": 73.2
+    },
+    {
+      "iso3": "MNE",
+      "iso2": "ME",
+      "name": "Montenegro",
+      "year": 2023,
+      "both": 75.2,
+      "male": 71.7,
+      "female": 78.8
+    },
+    {
+      "iso3": "MNG",
+      "iso2": "MN",
+      "name": "Mongolia",
+      "year": 2023,
+      "both": 74,
+      "male": 69.3,
+      "female": 78.8
+    },
+    {
+      "iso3": "MOZ",
+      "iso2": "MZ",
+      "name": "Mozambique",
+      "year": 2023,
+      "both": 61.4,
+      "male": 58.2,
+      "female": 64.3
+    },
+    {
+      "iso3": "MRT",
+      "iso2": "MR",
+      "name": "Mauritania",
+      "year": 2023,
+      "both": 70.9,
+      "male": 70.2,
+      "female": 71.6
+    },
+    {
+      "iso3": "MUS",
+      "iso2": "MU",
+      "name": "Mauritius",
+      "year": 2023,
+      "both": 73.6,
+      "male": 70.4,
+      "female": 77.1
+    },
+    {
+      "iso3": "MWI",
+      "iso2": "MW",
+      "name": "Malawi",
+      "year": 2023,
+      "both": 64.3,
+      "male": 61.3,
+      "female": 67.2
+    },
+    {
+      "iso3": "MYS",
+      "iso2": "MY",
+      "name": "Malaysia",
+      "year": 2023,
+      "both": 74.6,
+      "male": 72.5,
+      "female": 77.2
+    },
+    {
+      "iso3": "NAM",
+      "iso2": "NA",
+      "name": "Namibia",
+      "year": 2023,
+      "both": 65.7,
+      "male": 62,
+      "female": 69.3
+    },
+    {
+      "iso3": "NER",
+      "iso2": "NE",
+      "name": "Niger",
+      "year": 2023,
+      "both": 61.2,
+      "male": 59.8,
+      "female": 62.6
+    },
+    {
+      "iso3": "NGA",
+      "iso2": "NG",
+      "name": "Nigeria",
+      "year": 2023,
+      "both": 62.9,
+      "male": 61.4,
+      "female": 64.5
+    },
+    {
+      "iso3": "NIC",
+      "iso2": "NI",
+      "name": "Nicaragua",
+      "year": 2023,
+      "both": 77.4,
+      "male": 74.6,
+      "female": 79.9
+    },
+    {
+      "iso3": "NLD",
+      "iso2": "NL",
+      "name": "Netherlands (Kingdom of the)",
+      "year": 2023,
+      "both": 81.6,
+      "male": 80.2,
+      "female": 83
+    },
+    {
+      "iso3": "NOR",
+      "iso2": "NO",
+      "name": "Norway",
+      "year": 2023,
+      "both": 82.7,
+      "male": 81.3,
+      "female": 84.1
+    },
+    {
+      "iso3": "NPL",
+      "iso2": "NP",
+      "name": "Nepal",
+      "year": 2023,
+      "both": 72.1,
+      "male": 70,
+      "female": 74
+    },
+    {
+      "iso3": "NZL",
+      "iso2": "NZ",
+      "name": "New Zealand",
+      "year": 2023,
+      "both": 80.7,
+      "male": 79.3,
+      "female": 82.2
+    },
+    {
+      "iso3": "OMN",
+      "iso2": "OM",
+      "name": "Oman",
+      "year": 2023,
+      "both": 80.2,
+      "male": 78.9,
+      "female": 81.7
+    },
+    {
+      "iso3": "PAK",
+      "iso2": "PK",
+      "name": "Pakistan",
+      "year": 2023,
+      "both": 68.2,
+      "male": 67,
+      "female": 69.4
+    },
+    {
+      "iso3": "PAN",
+      "iso2": "PA",
+      "name": "Panama",
+      "year": 2023,
+      "both": 79.3,
+      "male": 76.6,
+      "female": 82.1
+    },
+    {
+      "iso3": "PER",
+      "iso2": "PE",
+      "name": "Peru",
+      "year": 2023,
+      "both": 78.4,
+      "male": 76.7,
+      "female": 80.1
+    },
+    {
+      "iso3": "PHL",
+      "iso2": "PH",
+      "name": "Philippines",
+      "year": 2023,
+      "both": 70.4,
+      "male": 66.8,
+      "female": 74.3
+    },
+    {
+      "iso3": "PNG",
+      "iso2": "PG",
+      "name": "Papua New Guinea",
+      "year": 2023,
+      "both": 67.8,
+      "male": 66.4,
+      "female": 69.2
+    },
+    {
+      "iso3": "POL",
+      "iso2": "PL",
+      "name": "Poland",
+      "year": 2023,
+      "both": 78.1,
+      "male": 74.4,
+      "female": 81.7
+    },
+    {
+      "iso3": "PRI",
+      "iso2": "PR",
+      "name": "Puerto Rico",
+      "year": 2023,
+      "both": 79.7,
+      "male": 76.4,
+      "female": 82.9
+    },
+    {
+      "iso3": "PRK",
+      "iso2": "KP",
+      "name": "Democratic People's Republic of Korea",
+      "year": 2023,
+      "both": 72.1,
+      "male": 69.1,
+      "female": 75.3
+    },
+    {
+      "iso3": "PRT",
+      "iso2": "PT",
+      "name": "Portugal",
+      "year": 2023,
+      "both": 81.9,
+      "male": 79,
+      "female": 84.6
+    },
+    {
+      "iso3": "PRY",
+      "iso2": "PY",
+      "name": "Paraguay",
+      "year": 2023,
+      "both": 73.3,
+      "male": 70.1,
+      "female": 76.7
+    },
+    {
+      "iso3": "PSE",
+      "iso2": "PS",
+      "name": "occupied Palestinian territory, including east Jerusalem",
+      "year": 2023,
+      "both": 64,
+      "male": 59.7,
+      "female": 68.4
+    },
+    {
+      "iso3": "QAT",
+      "iso2": "QA",
+      "name": "Qatar",
+      "year": 2023,
+      "both": 80.8,
+      "male": 80.7,
+      "female": 81.2
+    },
+    {
+      "iso3": "ROU",
+      "iso2": "RO",
+      "name": "Romania",
+      "year": 2023,
+      "both": 76.2,
+      "male": 72.5,
+      "female": 80
+    },
+    {
+      "iso3": "RUS",
+      "iso2": "RU",
+      "name": "Russian Federation",
+      "year": 2023,
+      "both": 72.4,
+      "male": 66.3,
+      "female": 78.7
+    },
+    {
+      "iso3": "RWA",
+      "iso2": "RW",
+      "name": "Rwanda",
+      "year": 2023,
+      "both": 69,
+      "male": 66.8,
+      "female": 71.1
+    },
+    {
+      "iso3": "SAU",
+      "iso2": "SA",
+      "name": "Saudi Arabia",
+      "year": 2023,
+      "both": 78.9,
+      "male": 78.2,
+      "female": 79.7
+    },
+    {
+      "iso3": "SDN",
+      "iso2": "SD",
+      "name": "Sudan",
+      "year": 2023,
+      "both": 67.4,
+      "male": 65.5,
+      "female": 69.4
+    },
+    {
+      "iso3": "SEN",
+      "iso2": "SN",
+      "name": "Senegal",
+      "year": 2023,
+      "both": 68.6,
+      "male": 66.7,
+      "female": 70.5
+    },
+    {
+      "iso3": "SGP",
+      "iso2": "SG",
+      "name": "Singapore",
+      "year": 2023,
+      "both": 83.6,
+      "male": 81.5,
+      "female": 85.7
+    },
+    {
+      "iso3": "SLB",
+      "iso2": "SB",
+      "name": "Solomon Islands",
+      "year": 2023,
+      "both": 65.2,
+      "male": 62.7,
+      "female": 68
+    },
+    {
+      "iso3": "SLE",
+      "iso2": "SL",
+      "name": "Sierra Leone",
+      "year": 2023,
+      "both": 62.4,
+      "male": 61.2,
+      "female": 63.5
+    },
+    {
+      "iso3": "SLV",
+      "iso2": "SV",
+      "name": "El Salvador",
+      "year": 2023,
+      "both": 73.3,
+      "male": 68.2,
+      "female": 78.1
+    },
+    {
+      "iso3": "SOM",
+      "iso2": "SO",
+      "name": "Somalia",
+      "year": 2023,
+      "both": 55.6,
+      "male": 52.7,
+      "female": 58.7
+    },
+    {
+      "iso3": "SRB",
+      "iso2": "RS",
+      "name": "Serbia",
+      "year": 2023,
+      "both": 76.2,
+      "male": 73.7,
+      "female": 78.5
+    },
+    {
+      "iso3": "SSD",
+      "iso2": "SS",
+      "name": "South Sudan",
+      "year": 2023,
+      "both": 61.7,
+      "male": 59.3,
+      "female": 64
+    },
+    {
+      "iso3": "STP",
+      "iso2": "ST",
+      "name": "Sao Tome and Principe",
+      "year": 2023,
+      "both": 72.9,
+      "male": 71.6,
+      "female": 74.3
+    },
+    {
+      "iso3": "SUR",
+      "iso2": "SR",
+      "name": "Suriname",
+      "year": 2023,
+      "both": 71.6,
+      "male": 68.9,
+      "female": 74.4
+    },
+    {
+      "iso3": "SVK",
+      "iso2": "SK",
+      "name": "Slovakia",
+      "year": 2023,
+      "both": 78,
+      "male": 74.7,
+      "female": 81.2
+    },
+    {
+      "iso3": "SVN",
+      "iso2": "SI",
+      "name": "Slovenia",
+      "year": 2023,
+      "both": 81.4,
+      "male": 78.7,
+      "female": 84.2
+    },
+    {
+      "iso3": "SWE",
+      "iso2": "SE",
+      "name": "Sweden",
+      "year": 2023,
+      "both": 82.9,
+      "male": 81.4,
+      "female": 84.4
+    },
+    {
+      "iso3": "SWZ",
+      "iso2": "SZ",
+      "name": "Eswatini",
+      "year": 2023,
+      "both": 59.1,
+      "male": 56.2,
+      "female": 61.9
+    },
+    {
+      "iso3": "SYC",
+      "iso2": "SC",
+      "name": "Seychelles",
+      "year": 2023,
+      "both": 75.5,
+      "male": 72.4,
+      "female": 79.5
+    },
+    {
+      "iso3": "SYR",
+      "iso2": "SY",
+      "name": "Syrian Arab Republic",
+      "year": 2023,
+      "both": 73.6,
+      "male": 71,
+      "female": 76.2
+    },
+    {
+      "iso3": "TCD",
+      "iso2": "TD",
+      "name": "Chad",
+      "year": 2023,
+      "both": 61.2,
+      "male": 59.3,
+      "female": 63.1
+    },
+    {
+      "iso3": "TGO",
+      "iso2": "TG",
+      "name": "Togo",
+      "year": 2023,
+      "both": 64.7,
+      "male": 61.8,
+      "female": 67.5
+    },
+    {
+      "iso3": "THA",
+      "iso2": "TH",
+      "name": "Thailand",
+      "year": 2023,
+      "both": 78.1,
+      "male": 74.5,
+      "female": 81.8
+    },
+    {
+      "iso3": "TJK",
+      "iso2": "TJ",
+      "name": "Tajikistan",
+      "year": 2023,
+      "both": 74.7,
+      "male": 73,
+      "female": 76.3
+    },
+    {
+      "iso3": "TKM",
+      "iso2": "TM",
+      "name": "Turkmenistan",
+      "year": 2023,
+      "both": 69.3,
+      "male": 65.2,
+      "female": 73
+    },
+    {
+      "iso3": "TLS",
+      "iso2": "TL",
+      "name": "Timor-Leste",
+      "year": 2023,
+      "both": 69.3,
+      "male": 67.7,
+      "female": 71.1
+    },
+    {
+      "iso3": "TON",
+      "iso2": "TO",
+      "name": "Tonga",
+      "year": 2023,
+      "both": 73,
+      "male": 70.7,
+      "female": 75.1
+    },
+    {
+      "iso3": "TTO",
+      "iso2": "TT",
+      "name": "Trinidad and Tobago",
+      "year": 2023,
+      "both": 69.9,
+      "male": 65.9,
+      "female": 74.5
+    },
+    {
+      "iso3": "TUN",
+      "iso2": "TN",
+      "name": "Tunisia",
+      "year": 2023,
+      "both": 77.7,
+      "male": 75.4,
+      "female": 80.1
+    },
+    {
+      "iso3": "TUR",
+      "iso2": "TR",
+      "name": "Türkiye",
+      "year": 2023,
+      "both": 76.2,
+      "male": 74.5,
+      "female": 77.9
+    },
+    {
+      "iso3": "TZA",
+      "iso2": "TZ",
+      "name": "United Republic of Tanzania",
+      "year": 2023,
+      "both": 68.3,
+      "male": 66.3,
+      "female": 70.1
+    },
+    {
+      "iso3": "UGA",
+      "iso2": "UG",
+      "name": "Uganda",
+      "year": 2023,
+      "both": 66.7,
+      "male": 63.7,
+      "female": 69.8
+    },
+    {
+      "iso3": "UKR",
+      "iso2": "UA",
+      "name": "Ukraine",
+      "year": 2023,
+      "both": 71.5,
+      "male": 65.5,
+      "female": 77.8
+    },
+    {
+      "iso3": "URY",
+      "iso2": "UY",
+      "name": "Uruguay",
+      "year": 2023,
+      "both": 77.1,
+      "male": 73.6,
+      "female": 80.4
+    },
+    {
+      "iso3": "USA",
+      "iso2": "US",
+      "name": "United States of America",
+      "year": 2023,
+      "both": 78.5,
+      "male": 76.2,
+      "female": 80.9
+    },
+    {
+      "iso3": "UZB",
+      "iso2": "UZ",
+      "name": "Uzbekistan",
+      "year": 2023,
+      "both": 74,
+      "male": 71.9,
+      "female": 76
+    },
+    {
+      "iso3": "VCT",
+      "iso2": "VC",
+      "name": "Saint Vincent and the Grenadines",
+      "year": 2023,
+      "both": 71.5,
+      "male": 68.4,
+      "female": 75.1
+    },
+    {
+      "iso3": "VEN",
+      "iso2": "VE",
+      "name": "Venezuela (Bolivarian Republic of)",
+      "year": 2023,
+      "both": 72.2,
+      "male": 68.3,
+      "female": 76.4
+    },
+    {
+      "iso3": "VNM",
+      "iso2": "VN",
+      "name": "Viet Nam",
+      "year": 2023,
+      "both": 74.3,
+      "male": 70.1,
+      "female": 78.5
+    },
+    {
+      "iso3": "VUT",
+      "iso2": "VU",
+      "name": "Vanuatu",
+      "year": 2023,
+      "both": 67.2,
+      "male": 64,
+      "female": 70.9
+    },
+    {
+      "iso3": "WSM",
+      "iso2": "WS",
+      "name": "Samoa",
+      "year": 2023,
+      "both": 73.5,
+      "male": 71.2,
+      "female": 75.9
+    },
+    {
+      "iso3": "YEM",
+      "iso2": "YE",
+      "name": "Yemen",
+      "year": 2023,
+      "both": 68.6,
+      "male": 66.3,
+      "female": 71
+    },
+    {
+      "iso3": "ZAF",
+      "iso2": "ZA",
+      "name": "South Africa",
+      "year": 2023,
+      "both": 66,
+      "male": 62,
+      "female": 70.1
+    },
+    {
+      "iso3": "ZMB",
+      "iso2": "ZM",
+      "name": "Zambia",
+      "year": 2023,
+      "both": 65.2,
+      "male": 62.7,
+      "female": 67.7
+    },
+    {
+      "iso3": "ZWE",
+      "iso2": "ZW",
+      "name": "Zimbabwe",
+      "year": 2023,
+      "both": 60.4,
+      "male": 57.4,
+      "female": 63.1
+    }
+  ]
+}

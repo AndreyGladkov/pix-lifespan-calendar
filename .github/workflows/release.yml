@@ -1,0 +1,77 @@
+name: Release Obsidian plugin
+
+on:
+  push:
+    tags:
+      - "*"
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      id-token: write
+      attestations: write
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Use Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: "22.x"
+
+      # Obsidian looks up a plugin release by a tag equal to the manifest version.
+      - name: Resolve release tag
+        id: tag
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          version="$(node -p "require('./manifest.json').version")"
+          if [ "$GITHUB_REF_TYPE" = "tag" ] && [ "$GITHUB_REF_NAME" != "$version" ]; then
+            echo "::error::Tag $GITHUB_REF_NAME does not match manifest.json version $version"
+            exit 1
+          fi
+          if [ "$(node -p "require('./package.json').version")" != "$version" ]; then
+            echo "::error::package.json version does not match manifest.json version $version"
+            exit 1
+          fi
+          if [ "$(node -p "require('./versions.json')['$version'] ?? ''")" = "" ]; then
+            echo "::error::versions.json has no entry for $version"
+            exit 1
+          fi
+          if gh release view "$version" > /dev/null 2>&1; then
+            echo "::error::Release $version already exists"
+            exit 1
+          fi
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+
+      # The runner's global Yarn 1 defers to the Yarn 4 release committed in .yarn/releases via yarnPath.
+      - name: Install dependencies
+        run: yarn install --immutable
+
+      - name: Test
+        run: yarn test
+
+      - name: Build plugin
+        run: yarn build
+
+      - name: Generate artifact attestation
+        uses: actions/attest@v4
+        with:
+          subject-path: |
+            main.js
+            manifest.json
+            styles.css
+
+      - name: Create release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VERSION: ${{ steps.tag.outputs.version }}
+        run: |
+          gh release create "$VERSION" \
+            --title="$VERSION" \
+            --target="$GITHUB_SHA" \
+            --generate-notes \
+            --draft \
+            main.js manifest.json styles.css

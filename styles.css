@@ -1,0 +1,159 @@
+.pix-lifespan-calendar {
+    position: relative;
+    container-type: inline-size;
+    display: flex;
+    flex-direction: column;
+    gap: var(--size-4-1);
+    padding-bottom: var(--size-4-4);
+}
+
+.pix-lifespan-calendar.is-day {
+    gap: var(--size-4-3);
+}
+
+.pix-lifespan-calendar.is-week,
+.pix-lifespan-calendar.is-month {
+    gap: 0;
+}
+
+.pix-lifespan-calendar-header {
+    position: sticky;
+    top: calc(-1 * var(--size-4-4));
+    z-index: 1;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--size-4-2);
+    padding: var(--size-4-2) 0;
+    background-color: var(--background-primary);
+}
+
+.pix-lifespan-calendar-units {
+    display: flex;
+    gap: var(--size-4-1);
+}
+
+.pix-lifespan-calendar-stats {
+    color: var(--text-muted);
+    font-size: var(--font-ui-small);
+}
+
+.pix-lifespan-calendar-year {
+    display: flex;
+    align-items: center;
+    gap: var(--size-4-2);
+}
+
+.pix-lifespan-calendar-year-label {
+    flex: 0 0 3em;
+    color: var(--text-faint);
+    font-size: var(--font-ui-smaller);
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+    text-align: right;
+}
+
+.pix-lifespan-calendar-year-grid {
+    flex: 1 1 auto;
+    width: 100%;
+}
+
+.pix-lifespan-calendar-year-grid svg {
+    display: block;
+    touch-action: pan-y;
+}
+
+.pix-lifespan-calendar-measure {
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 0;
+    visibility: hidden;
+}
+
+.pix-lifespan-calendar:not(.is-day) .pix-lifespan-calendar-year-label {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    height: 0;
+}
+
+@container (max-width: 480px) {
+    .is-day .pix-lifespan-calendar-year {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+    }
+
+    .is-day .pix-lifespan-calendar-year-label {
+        flex-basis: auto;
+        text-align: left;
+    }
+}
+
+.pix-lifespan-calendar-cell {
+    fill: var(--background-modifier-border);
+}
+
+.pix-lifespan-calendar-cell.is-lived {
+    fill: var(--interactive-accent);
+}
+
+.pix-lifespan-calendar-cell.is-current {
+    fill: var(--color-orange);
+}
+
+.pix-lifespan-calendar-cell.is-surplus {
+    fill: var(--color-green);
+}
+
+.pix-lifespan-calendar-cell.is-outside {
+    fill: var(--background-modifier-border);
+    opacity: 0.25;
+}
+
+.pix-lifespan-calendar-placeholder {
+    fill: none;
+    stroke: var(--background-modifier-border);
+    stroke-width: 1;
+}
+
+.pix-lifespan-calendar-tooltip {
+    position: absolute;
+    z-index: var(--layer-tooltip);
+    transform: translate(-50%, calc(-100% - var(--size-4-1)));
+    padding: var(--size-4-1) var(--size-4-2);
+    border-radius: var(--radius-s);
+    background-color: var(--background-modifier-message);
+    color: var(--text-on-accent);
+    font-size: var(--font-ui-smaller);
+    white-space: nowrap;
+    pointer-events: none;
+}
+
+.pix-lifespan-calendar-tooltip-period {
+    font-weight: var(--font-semibold);
+    font-variant-numeric: tabular-nums;
+}
+
+.pix-lifespan-calendar-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--size-4-2);
+    margin-top: var(--size-4-12);
+    color: var(--text-muted);
+    text-align: center;
+}
+
+.pix-lifespan-calendar-warning {
+    color: var(--text-warning);
+}
+
+.pix-lifespan-calendar-error {
+    color: var(--text-error);
+}
+
+.pix-lifespan-calendar-invalid input {
+    border-color: var(--text-error);
+}
