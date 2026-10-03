@@ -56,7 +56,7 @@ export function YearGrid({ block, unit, layout, onHover }: YearGridProps) {
     };
 
     return (
-        <div ref={containerRef} className="lifespan-calendar-year-grid" style={{ height }}>
+        <div ref={containerRef} className="pix-lifespan-calendar-year-grid" style={{ height }}>
             {near && (
                 <svg
                     width={width}
@@ -69,7 +69,7 @@ export function YearGrid({ block, unit, layout, onHover }: YearGridProps) {
                     {block.cells.map((cell) => (
                         <rect
                             key={cell.key}
-                            className={`lifespan-calendar-cell is-${cell.state}`}
+                            className={`pix-lifespan-calendar-cell is-${cell.state}`}
                             x={cell.column * pitch}
                             y={cell.row * pitch}
                             width={size}
@@ -80,7 +80,7 @@ export function YearGrid({ block, unit, layout, onHover }: YearGridProps) {
                     {placeholders.map(({ column, row }) => (
                         <rect
                             key={`empty-${column}-${row}`}
-                            className="lifespan-calendar-placeholder"
+                            className="pix-lifespan-calendar-placeholder"
                             x={column * pitch + 0.5}
                             y={row * pitch + 0.5}
                             width={size - 1}

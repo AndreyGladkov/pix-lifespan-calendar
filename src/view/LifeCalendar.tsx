@@ -32,7 +32,7 @@ export function LifeCalendar({ store, translator, data, openSettings }: LifeCale
 
     if (settings.birthDate === null) {
         return (
-            <div className="lifespan-calendar-empty">
+            <div className="pix-lifespan-calendar-empty">
                 <p>{t("emptyMessage")}</p>
                 <button className="mod-cta" onClick={openSettings}>
                     {t("openSettings")}
@@ -84,7 +84,7 @@ function CalendarGrid({
 
     useEffect(() => {
         const closeOutsideGrid = (event: PointerEvent): void => {
-            if (!(event.target instanceof Element) || !event.target.closest(".lifespan-calendar-year-grid"))
+            if (!(event.target instanceof Element) || !event.target.closest(".pix-lifespan-calendar-year-grid"))
                 setPointer(null);
         };
         document.addEventListener("pointerdown", closeOutsideGrid);
@@ -92,9 +92,9 @@ function CalendarGrid({
     }, []);
 
     return (
-        <div className={`lifespan-calendar is-${unit}`} ref={rootRef}>
-            <div className="lifespan-calendar-header">
-                <div className="lifespan-calendar-units">
+        <div className={`pix-lifespan-calendar is-${unit}`} ref={rootRef}>
+            <div className="pix-lifespan-calendar-header">
+                <div className="pix-lifespan-calendar-units">
                     {UNITS.map((option) => (
                         <button
                             key={option.unit}
@@ -105,18 +105,18 @@ function CalendarGrid({
                         </button>
                     ))}
                 </div>
-                <div className="lifespan-calendar-stats" title={expectancyHint}>
+                <div className="pix-lifespan-calendar-stats" title={expectancyHint}>
                     {statsText(stats, unit, translator)}
                 </div>
             </div>
-            <div className="lifespan-calendar-year lifespan-calendar-measure" aria-hidden>
-                <div className="lifespan-calendar-year-label" />
-                <div className="lifespan-calendar-year-grid" ref={measureRef} />
+            <div className="pix-lifespan-calendar-year pix-lifespan-calendar-measure" aria-hidden>
+                <div className="pix-lifespan-calendar-year-label" />
+                <div className="pix-lifespan-calendar-year-grid" ref={measureRef} />
             </div>
             {gridWidth > 0 &&
                 blocks.map((block, index) => (
-                    <div className="lifespan-calendar-year" key={`${unit}-${block.year}`}>
-                        <div className="lifespan-calendar-year-label">
+                    <div className="pix-lifespan-calendar-year" key={`${unit}-${block.year}`}>
+                        <div className="pix-lifespan-calendar-year-label">
                             {isLabelled(unit, block.year, index) ? block.year : ""}
                         </div>
                         <YearGrid block={block} unit={unit} layout={layout} onHover={setPointer} />
@@ -170,13 +170,13 @@ function Tooltip({ pointer, root, birth, showRange, translator }: TooltipProps) 
     const range = new Intl.DateTimeFormat(translator.language, { day: "2-digit", month: "2-digit" });
     return (
         <div
-            className="lifespan-calendar-tooltip"
+            className="pix-lifespan-calendar-tooltip"
             style={{
                 left: pointer.rect.left - origin.left + pointer.rect.width / 2,
                 top: pointer.rect.top - origin.top,
             }}
         >
-            <div className="lifespan-calendar-tooltip-period">
+            <div className="pix-lifespan-calendar-tooltip-period">
                 {showRange ? `${cell.key} · ${range.formatRange(cell.start, cell.end)}` : cell.key}
             </div>
             <div>{translator.t("age", { age: ageAt(cell.start, birth) })}</div>

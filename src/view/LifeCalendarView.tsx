@@ -6,7 +6,7 @@ import type { Translator } from "../i18n";
 import type { SettingsStore } from "../settingsStore";
 import { LifeCalendar } from "./LifeCalendar";
 
-export const VIEW_TYPE_LIFE_CALENDAR = "lifespan-calendar";
+export const VIEW_TYPE_LIFE_CALENDAR = "pix-lifespan-calendar";
 export const LIFE_CALENDAR_ICON = "calendar-days";
 
 export interface LifeCalendarViewDeps {

@@ -117,7 +117,7 @@ export class LifeCalendarSettingTab extends PluginSettingTab {
             .setDesc(t("lifestyleDesc"))
             .setHeading();
         this.lifestyleIgnoredEl = heading.descEl.createDiv({
-            cls: "lifespan-calendar-warning",
+            cls: "pix-lifespan-calendar-warning",
             text: t("lifestyleIgnored"),
         });
 
@@ -213,11 +213,11 @@ export class LifeCalendarSettingTab extends PluginSettingTab {
 }
 
 function errorMessage(setting: Setting, message: string): (visible: boolean) => void {
-    const errorEl = setting.descEl.createDiv({ cls: "lifespan-calendar-error", text: message });
+    const errorEl = setting.descEl.createDiv({ cls: "pix-lifespan-calendar-error", text: message });
     errorEl.hide();
     return (visible) => {
         errorEl.toggle(visible);
-        setting.controlEl.toggleClass("lifespan-calendar-invalid", visible);
+        setting.controlEl.toggleClass("pix-lifespan-calendar-invalid", visible);
     };
 }
 
