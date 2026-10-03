@@ -11,7 +11,8 @@
     "lint": "eslint .",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "fetch-who": "tsx scripts/fetch-who.ts"
+    "fetch-who": "tsx scripts/fetch-who.ts",
+    "bump": "tsx scripts/bump-version.ts"
   },
   "packageManager": "yarn@4.18.1",
   "dependencies": {
