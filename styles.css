@@ -121,6 +121,53 @@
     opacity: 0.4;
 }
 
+.pix-lifespan-calendar-details {
+    color: var(--text-muted);
+    font-size: var(--font-ui-small);
+    margin-bottom: var(--size-4-2);
+}
+
+.pix-lifespan-calendar-details summary {
+    cursor: var(--cursor);
+    width: fit-content;
+}
+
+.pix-lifespan-calendar-details-total {
+    margin: var(--size-4-2) 0 var(--size-4-1);
+    color: var(--text-normal);
+    font-weight: var(--font-semibold);
+}
+
+.pix-lifespan-calendar-breakdown td {
+    padding: var(--size-2-1) var(--size-4-3) var(--size-2-1) 0;
+}
+
+.pix-lifespan-calendar-breakdown td:nth-child(2) {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+}
+
+.pix-lifespan-calendar-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--size-2-2) var(--size-4-4);
+    margin: var(--size-4-2) 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.pix-lifespan-calendar-legend li {
+    display: flex;
+    align-items: center;
+    gap: var(--size-2-2);
+}
+
+.pix-lifespan-calendar-placeholder {
+    fill: none;
+    stroke: var(--background-modifier-border);
+    stroke-width: 1;
+}
+
 .pix-lifespan-calendar-tooltip {
     position: absolute;
     z-index: var(--layer-tooltip);

@@ -1,4 +1,4 @@
-import type { LifeExpectancyEstimate, ResolvedLifeExpectancy } from "./domain/lifeExpectancy";
+import type { LifeExpectancyEstimate } from "./domain/lifeExpectancy";
 import type { LifestyleFactor } from "./domain/lifestyle";
 import type { MessageKey, Translator } from "./i18n";
 
@@ -37,13 +37,4 @@ export function estimatePlaceholder(translator: Translator, estimate: LifeExpect
               place,
               breakdown: breakdown(translator, estimate, format),
           });
-}
-
-export function estimateHint(translator: Translator, { estimate, overridden }: ResolvedLifeExpectancy) {
-    if (overridden || estimate.adjustments.length === 0) return undefined;
-    const format = yearsFormat(translator);
-    return translator.t("expectancyBreakdown", {
-        years: format.format(estimate.years),
-        breakdown: breakdown(translator, estimate, format),
-    });
 }

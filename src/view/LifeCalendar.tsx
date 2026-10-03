@@ -1,13 +1,14 @@
 import { parseISO } from "date-fns";
-import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
+import { useEffect, useMemo, useRef, useState, useSyncExternalStore, type ReactNode } from "react";
+import { countryNamer } from "../countryNames";
 import { ageAt, buildGrid, GRID_SHAPE, type GridUnit } from "../domain/grid";
 import { cellLayout } from "../domain/layout";
 import { resolveLifeExpectancy, type LifeExpectancyData, type LifestyleSpans } from "../domain/lifeExpectancy";
 import { lifespan } from "../domain/lifespan";
 import { lifeStats, type LifeStats } from "../domain/stats";
 import type { MessageKey, PluralKey, Translator } from "../i18n";
-import { estimateHint } from "../lifeExpectancyText";
 import type { SettingsStore } from "../settingsStore";
+import { LifeDetails } from "./LifeDetails";
 import { useElementWidth } from "./useElementWidth";
 import { useToday } from "./useToday";
 import { YearGrid, type CellPointer } from "./YearGrid";
@@ -28,6 +29,7 @@ const UNITS: { unit: GridUnit; label: MessageKey; remaining: PluralKey }[] = [
 export function LifeCalendar({ store, translator, data, openSettings }: LifeCalendarProps) {
     const settings = useSyncExternalStore(store.subscribe, store.get);
     const today = useToday();
+    const nameOfCountry = useMemo(() => countryNamer(translator.language), [translator]);
     const { t } = translator;
 
     if (settings.birthDate === null) {
@@ -42,16 +44,29 @@ export function LifeCalendar({ store, translator, data, openSettings }: LifeCale
     }
 
     const lifeExpectancy = resolveLifeExpectancy(data, settings);
+    const { country } = lifeExpectancy.estimate;
     return (
         <CalendarGrid
             birthDate={settings.birthDate}
             lifeExpectancyYears={lifeExpectancy.years}
             spans={lifeExpectancy.spans}
-            expectancyHint={estimateHint(translator, lifeExpectancy)}
             unit={settings.unit}
             today={today}
             translator={translator}
             onUnitChange={(unit) => void store.update({ unit })}
+            details={
+                <LifeDetails
+                    lifeExpectancy={lifeExpectancy}
+                    place={country ? nameOfCountry(country) : t("lifeExpectancyWorld")}
+                    sex={settings.sex}
+                    unit={settings.unit}
+                    open={settings.detailsOpen}
+                    translator={translator}
+                    onToggle={(detailsOpen) => {
+                        if (detailsOpen !== settings.detailsOpen) void store.update({ detailsOpen });
+                    }}
+                />
+            }
         />
     );
 }
@@ -60,22 +75,22 @@ interface CalendarGridProps {
     birthDate: string;
     lifeExpectancyYears: number;
     spans: LifestyleSpans;
-    expectancyHint: string | undefined;
     unit: GridUnit;
     today: Date;
     translator: Translator;
     onUnitChange: (unit: GridUnit) => void;
+    details: ReactNode;
 }
 
 function CalendarGrid({
     birthDate,
     lifeExpectancyYears,
     spans,
-    expectancyHint,
     unit,
     today,
     translator,
     onUnitChange,
+    details,
 }: CalendarGridProps) {
     const rootRef = useRef<HTMLDivElement>(null);
     const [pointer, setPointer] = useState<CellPointer | null>(null);
@@ -113,10 +128,9 @@ function CalendarGrid({
                         </button>
                     ))}
                 </div>
-                <div className="pix-lifespan-calendar-stats" title={expectancyHint}>
-                    {statsText(stats, unit, translator)}
-                </div>
+                <div className="pix-lifespan-calendar-stats">{statsText(stats, unit, translator)}</div>
             </div>
+            {details}
             <div className="pix-lifespan-calendar-year pix-lifespan-calendar-measure" aria-hidden>
                 <div className="pix-lifespan-calendar-year-label" />
                 <div className="pix-lifespan-calendar-year-grid" ref={measureRef} />

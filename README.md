@@ -14,7 +14,7 @@ By default, life expectancy comes from World Health Organization (WHO) data for 
 - Life expectancy from WHO data for 185 countries by sex, or your own value.
 - Lifestyle adjustments: smoking, alcohol and physical activity.
 - Tooltip on hover: the period and your age at that time.
-- Stats: percentage of life lived and how many cells are ahead.
+- Stats: percentage of life lived and how many cells are ahead, plus a "Details" panel with the life expectancy breakdown and a color legend.
 - Interface in English, Russian, German and French, following Obsidian's language setting.
 - Works on desktop and mobile, with no horizontal scrolling.
 - No network access: WHO data is bundled with the plugin.
@@ -44,6 +44,8 @@ By default, life expectancy comes from World Health Organization (WHO) data for 
 | Orange             | Current day, week or month                                             |
 | Gray               | Ahead                                                                  |
 | Green              | Lived beyond expected lifespan                                         |
+| Cyan               | Ahead, added by lifestyle (see "Lifestyle adjustments")                |
+| Faded red          | Taken by lifestyle: years the WHO value gives but your habits don't    |
 | Faded              | Outside life: before birth or after the expected date in the last year |
 | Empty outline      | 53rd week in a year that doesn't have one (see below)                  |
 
@@ -59,7 +61,9 @@ ISO numbering was chosen because Obsidian's weekly notes use it (`2026-W40`), wh
 
 ## Lifestyle adjustments
 
-Adjustments in years are added to the WHO value. A manual life expectancy ignores them: when one is set, the "Lifestyle" section is marked "Not applied". The result is never less than 1 year. The breakdown is shown in the "Life expectancy" placeholder and when hovering over the stats in the view, for example `65.2 = WHO 66.3 − 4 smoking − 0.5 alcohol + 3.4 activity`.
+Adjustments in years are added to the WHO value. A manual life expectancy ignores them: when one is set, the "Lifestyle" section is marked "Not applied". The result is never less than 1 year. The breakdown is shown in the "Life expectancy" placeholder, for example `65.2 (WHO, Russia: 66.3 − 4 smoking − 0.5 alcohol + 3.4 activity)`, and in the "Details" panel of the view, where each adjustment is also given in cells of the current grid unit (for example `≈ −522 weeks`).
+
+On the grid, losses are applied first and gains after them. With WHO 74.8, smoking −10 and activity +3.4, cells from 64.8 to 68.2 years are marked as added by lifestyle and cells from 68.2 to 74.8 as taken by lifestyle. Lived cells are never recolored.
 
 > This is a rough guide, not a medical forecast. The numbers are population averages from studies, mostly of people over 40 in high-income countries. The factors are related (smokers drink more and move less on average), so simply adding the adjustments is a simplification.
 
