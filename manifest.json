@@ -4,6 +4,7 @@
   "version": "0.1.0",
   "minAppVersion": "1.8.0",
   "description": "Draw your life as a grid of days, weeks or months, with life expectancy from WHO data.",
-  "author": "A. Gladkov",
+  "author": "Andrei Gladkov",
+  "authorUrl": "https://github.com/AndreyGladkov",
   "isDesktopOnly": false
 }
