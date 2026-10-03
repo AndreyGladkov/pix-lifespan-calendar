@@ -130,9 +130,9 @@ describe("emptyPositions", () => {
 });
 
 describe("ageAt", () => {
-    it("returns full years at the period start, clamped to birth", () => {
-        expect(ageAt({ start: date("2026-03-14") }, life.birth)).toBe(35);
-        expect(ageAt({ start: date("2026-03-15") }, life.birth)).toBe(36);
-        expect(ageAt({ start: date("1990-01-01") }, life.birth)).toBe(0);
+    it("returns full years at the date, clamped to birth", () => {
+        expect(ageAt(date("2026-03-14"), life.birth)).toBe(35);
+        expect(ageAt(date("2026-03-15"), life.birth)).toBe(36);
+        expect(ageAt(date("1990-01-01"), life.birth)).toBe(0);
     });
 });

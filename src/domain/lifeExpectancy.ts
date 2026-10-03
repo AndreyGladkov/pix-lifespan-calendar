@@ -1,3 +1,5 @@
+import { lifestyleAdjustments, type Lifestyle, type LifestyleAdjustment } from "./lifestyle";
+
 export type Sex = "male" | "female" | "unspecified";
 
 export interface LifeExpectancyRecord {
@@ -18,33 +20,41 @@ export interface LifeExpectancyData {
     countries: CountryLifeExpectancy[];
 }
 
-export type LifeExpectancySource = { kind: "override" } | { kind: "who"; country: CountryLifeExpectancy | null };
+export const LIFE_EXPECTANCY_RANGE = { min: 1, max: 150 };
+
+export interface LifeExpectancyEstimate {
+    years: number;
+    country: CountryLifeExpectancy | null;
+    baseline: number;
+    adjustments: LifestyleAdjustment[];
+}
 
 export interface ResolvedLifeExpectancy {
     years: number;
-    source: LifeExpectancySource;
+    estimate: LifeExpectancyEstimate;
+    overridden: boolean;
 }
 
-export interface LifeExpectancyInput {
+export interface EstimateInput extends Lifestyle {
     country: string | null;
     sex: Sex;
+}
+
+export interface LifeExpectancyInput extends EstimateInput {
     lifeExpectancyOverride: number | null;
 }
 
-export function whoLifeExpectancy(
-    data: LifeExpectancyData,
-    countryIso3: string | null,
-    sex: Sex,
-): { years: number; country: CountryLifeExpectancy | null } {
-    const country = data.countries.find((c) => c.iso3 === countryIso3) ?? null;
+export function estimateLifeExpectancy(data: LifeExpectancyData, input: EstimateInput): LifeExpectancyEstimate {
+    const country = data.countries.find((c) => c.iso3 === input.country) ?? null;
     const record = country ?? data.world;
-    return { years: sex === "unspecified" ? record.both : record[sex], country };
+    const baseline = input.sex === "unspecified" ? record.both : record[input.sex];
+    const adjustments = lifestyleAdjustments(input);
+    const adjusted = adjustments.reduce((total, adjustment) => total + adjustment.years, baseline);
+    return { years: Math.max(LIFE_EXPECTANCY_RANGE.min, adjusted), country, baseline, adjustments };
 }
 
 export function resolveLifeExpectancy(data: LifeExpectancyData, input: LifeExpectancyInput): ResolvedLifeExpectancy {
-    if (input.lifeExpectancyOverride !== null) {
-        return { years: input.lifeExpectancyOverride, source: { kind: "override" } };
-    }
-    const { years, country } = whoLifeExpectancy(data, input.country, input.sex);
-    return { years, source: { kind: "who", country } };
+    const estimate = estimateLifeExpectancy(data, input);
+    const override = input.lifeExpectancyOverride;
+    return { years: override ?? estimate.years, estimate, overridden: override !== null };
 }

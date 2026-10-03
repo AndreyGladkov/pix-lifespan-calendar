@@ -1,17 +1,52 @@
-import { format } from "date-fns";
+import { format, parseISO } from "date-fns";
 import { PluginSettingTab, Setting, type App, type Plugin, type TextComponent } from "obsidian";
 import { countryNamer } from "./countryNames";
-import { whoLifeExpectancy, type LifeExpectancyData, type Sex } from "./domain/lifeExpectancy";
-import type { GridUnit } from "./domain/grid";
-import type { Translator } from "./i18n";
-import { parseBirthDate, parseLifeExpectancy, type ParseResult } from "./settings";
+import { ageAt } from "./domain/grid";
+import { estimateLifeExpectancy, type LifeExpectancyData } from "./domain/lifeExpectancy";
+import type { MessageKey, Translator } from "./i18n";
+import { estimatePlaceholder, formatYears } from "./lifeExpectancyText";
+import {
+    parseBirthDate,
+    parseLifeExpectancy,
+    parseQuitAge,
+    type LifeCalendarSettings,
+    type ParseResult,
+} from "./settings";
 import type { SettingsStore } from "./settingsStore";
 
-const SEX_OPTIONS = { unspecified: "sexUnspecified", male: "sexMale", female: "sexFemale" } as const;
-const UNIT_OPTIONS = { day: "unitDay", week: "unitWeek", month: "unitMonth" } as const;
+type ChoiceKey = "sex" | "unit" | "smoking" | "alcohol" | "activity";
+type ChoiceOptions<K extends ChoiceKey> = Record<LifeCalendarSettings[K], MessageKey>;
+
+const SEX_OPTIONS: ChoiceOptions<"sex"> = { unspecified: "sexUnspecified", male: "sexMale", female: "sexFemale" };
+const UNIT_OPTIONS: ChoiceOptions<"unit"> = { day: "unitDay", week: "unitWeek", month: "unitMonth" };
+const SMOKING_OPTIONS: ChoiceOptions<"smoking"> = {
+    unspecified: "notSpecified",
+    never: "smokingNever",
+    current: "smokingCurrent",
+    former: "smokingFormer",
+};
+const ALCOHOL_OPTIONS: ChoiceOptions<"alcohol"> = {
+    unspecified: "notSpecified",
+    under10: "alcoholUnder10",
+    "10to20": "alcohol10to20",
+    "20to35": "alcohol20to35",
+    over35: "alcoholOver35",
+};
+const ACTIVITY_OPTIONS: ChoiceOptions<"activity"> = {
+    unspecified: "notSpecified",
+    none: "activityNone",
+    upTo75: "activityUpTo75",
+    "75to149": "activity75to149",
+    "150to299": "activity150to299",
+    "300to449": "activity300to449",
+    "450plus": "activity450plus",
+};
 
 export class LifeCalendarSettingTab extends PluginSettingTab {
     private lifeExpectancyText: TextComponent | null = null;
+    private lifestyleIgnoredEl: HTMLElement | null = null;
+    private unsubscribe: (() => void) | null = null;
+    private readonly nameOfCountry: ReturnType<typeof countryNamer>;
 
     constructor(
         app: App,
@@ -21,15 +56,26 @@ export class LifeCalendarSettingTab extends PluginSettingTab {
         private readonly data: LifeExpectancyData,
     ) {
         super(app, plugin);
+        this.nameOfCountry = countryNamer(translator.language);
     }
 
     display(): void {
         this.containerEl.empty();
         this.addBirthDate();
         this.addCountry();
-        this.addSex();
+        this.addChoice("sex", "sexName", "sexDesc", SEX_OPTIONS);
+        this.addLifestyle();
         this.addLifeExpectancy();
-        this.addUnit();
+        this.addChoice("unit", "unitName", "unitDesc", UNIT_OPTIONS);
+        this.refreshLifeExpectancyHints();
+        this.unsubscribe?.();
+        this.unsubscribe = this.store.subscribe(() => this.refreshLifeExpectancyHints());
+    }
+
+    override hide(): void {
+        this.unsubscribe?.();
+        this.unsubscribe = null;
+        super.hide();
     }
 
     private addBirthDate(): void {
@@ -50,9 +96,8 @@ export class LifeCalendarSettingTab extends PluginSettingTab {
 
     private addCountry(): void {
         const { t, language } = this.translator;
-        const nameOf = countryNamer(language);
         const countries = this.data.countries
-            .map((country) => ({ iso3: country.iso3, name: nameOf(country) }))
+            .map((country) => ({ iso3: country.iso3, name: this.nameOfCountry(country) }))
             .sort((a, b) => a.name.localeCompare(b.name, language));
         new Setting(this.containerEl)
             .setName(t("countryName"))
@@ -61,30 +106,45 @@ export class LifeCalendarSettingTab extends PluginSettingTab {
                 dropdown.addOption("", t("countryWorld"));
                 for (const country of countries) dropdown.addOption(country.iso3, country.name);
                 dropdown.setValue(this.store.get().country ?? "");
-                dropdown.onChange(
-                    (value) =>
-                        void this.store
-                            .update({ country: value === "" ? null : value })
-                            .then(() => this.refreshLifeExpectancyPlaceholder()),
-                );
+                dropdown.onChange((value) => void this.store.update({ country: value === "" ? null : value }));
             });
     }
 
-    private addSex(): void {
+    private addLifestyle(): void {
         const { t } = this.translator;
-        new Setting(this.containerEl)
-            .setName(t("sexName"))
-            .setDesc(t("sexDesc"))
-            .addDropdown((dropdown) => {
-                for (const [value, label] of Object.entries(SEX_OPTIONS)) dropdown.addOption(value, t(label));
-                dropdown.setValue(this.store.get().sex);
-                dropdown.onChange(
-                    (value) =>
-                        void this.store
-                            .update({ sex: value as Sex })
-                            .then(() => this.refreshLifeExpectancyPlaceholder()),
-                );
-            });
+        const heading = new Setting(this.containerEl)
+            .setName(t("lifestyleHeading"))
+            .setDesc(t("lifestyleDesc"))
+            .setHeading();
+        this.lifestyleIgnoredEl = heading.descEl.createDiv({
+            cls: "lifespan-calendar-warning",
+            text: t("lifestyleIgnored"),
+        });
+
+        this.addChoice("smoking", "smokingName", "smokingDesc", SMOKING_OPTIONS, (smoking) =>
+            quitAge.settingEl.toggle(smoking === "former"),
+        );
+        const quitAge = this.addQuitAge();
+        quitAge.settingEl.toggle(this.store.get().smoking === "former");
+        this.addChoice("alcohol", "alcoholName", "alcoholDesc", ALCOHOL_OPTIONS);
+        this.addChoice("activity", "activityName", "activityDesc", ACTIVITY_OPTIONS);
+    }
+
+    private addQuitAge(): Setting {
+        const { t } = this.translator;
+        const setting = new Setting(this.containerEl).setName(t("quitAgeName")).setDesc(t("quitAgeDesc"));
+        const showError = errorMessage(setting, t("quitAgeError"));
+        setting.addText((text) => {
+            text.inputEl.type = "number";
+            text.inputEl.inputMode = "numeric";
+            text.setValue(this.store.get().smokingQuitAge?.toString() ?? "");
+            text.onChange((value) =>
+                saveValidated(parseQuitAge(value, this.currentAge()), showError, (smokingQuitAge) =>
+                    this.store.update({ smokingQuitAge }),
+                ),
+            );
+        });
+        return setting;
     }
 
     private addLifeExpectancy(): void {
@@ -94,7 +154,8 @@ export class LifeCalendarSettingTab extends PluginSettingTab {
         setting.addText((text) => {
             this.lifeExpectancyText = text;
             text.inputEl.inputMode = "decimal";
-            text.setValue(this.formatOverride());
+            const override = this.store.get().lifeExpectancyOverride;
+            text.setValue(override === null ? "" : formatYears(this.translator, override));
             text.onChange((value) =>
                 saveValidated(parseLifeExpectancy(value), showError, (lifeExpectancyOverride) =>
                     this.store.update({ lifeExpectancyOverride }),
@@ -111,34 +172,43 @@ export class LifeCalendarSettingTab extends PluginSettingTab {
                     void this.store.update({ lifeExpectancyOverride: null });
                 }),
         );
-        this.refreshLifeExpectancyPlaceholder();
     }
 
-    private addUnit(): void {
+    private addChoice<K extends ChoiceKey>(
+        key: K,
+        name: MessageKey,
+        description: MessageKey,
+        options: ChoiceOptions<K>,
+        onChange?: (value: LifeCalendarSettings[K]) => void,
+    ): void {
         const { t } = this.translator;
         new Setting(this.containerEl)
-            .setName(t("unitName"))
-            .setDesc(t("unitDesc"))
+            .setName(t(name))
+            .setDesc(t(description))
             .addDropdown((dropdown) => {
-                for (const [value, label] of Object.entries(UNIT_OPTIONS)) dropdown.addOption(value, t(label));
-                dropdown.setValue(this.store.get().unit);
-                dropdown.onChange((value) => void this.store.update({ unit: value as GridUnit }));
+                for (const [option, label] of Object.entries<MessageKey>(options)) dropdown.addOption(option, t(label));
+                dropdown.setValue(this.store.get()[key]);
+                dropdown.onChange((selected) => {
+                    const value = selected as LifeCalendarSettings[K];
+                    onChange?.(value);
+                    void this.store.update({ [key]: value });
+                });
             });
     }
 
-    private formatOverride(): string {
-        const override = this.store.get().lifeExpectancyOverride;
-        return override === null ? "" : this.translator.formatNumber(override, { maximumFractionDigits: 1 });
+    private currentAge(): number | null {
+        const { birthDate } = this.store.get();
+        return birthDate === null ? null : ageAt(new Date(), parseISO(birthDate));
     }
 
-    private refreshLifeExpectancyPlaceholder(): void {
-        const { t, formatNumber, language } = this.translator;
-        const { country, sex } = this.store.get();
-        const who = whoLifeExpectancy(this.data, country, sex);
-        const place = who.country ? countryNamer(language)(who.country) : t("lifeExpectancyWorld");
-        this.lifeExpectancyText?.setPlaceholder(
-            t("lifeExpectancyPlaceholder", { years: formatNumber(who.years, { maximumFractionDigits: 1 }), place }),
-        );
+    private refreshLifeExpectancyHints(): void {
+        const settings = this.store.get();
+        const estimate = estimateLifeExpectancy(this.data, settings);
+        const place = estimate.country
+            ? this.nameOfCountry(estimate.country)
+            : this.translator.t("lifeExpectancyWorld");
+        this.lifeExpectancyText?.setPlaceholder(estimatePlaceholder(this.translator, estimate, place));
+        this.lifestyleIgnoredEl?.toggle(settings.lifeExpectancyOverride !== null);
     }
 }
 

@@ -6,6 +6,7 @@ import { resolveLifeExpectancy, type LifeExpectancyData } from "../domain/lifeEx
 import { lifespan } from "../domain/lifespan";
 import { lifeStats, type LifeStats } from "../domain/stats";
 import type { MessageKey, PluralKey, Translator } from "../i18n";
+import { estimateHint } from "../lifeExpectancyText";
 import type { SettingsStore } from "../settingsStore";
 import { useElementWidth } from "./useElementWidth";
 import { useToday } from "./useToday";
@@ -40,10 +41,12 @@ export function LifeCalendar({ store, translator, data, openSettings }: LifeCale
         );
     }
 
+    const lifeExpectancy = resolveLifeExpectancy(data, settings);
     return (
         <CalendarGrid
             birthDate={settings.birthDate}
-            lifeExpectancyYears={resolveLifeExpectancy(data, settings).years}
+            lifeExpectancyYears={lifeExpectancy.years}
+            expectancyHint={estimateHint(translator, lifeExpectancy)}
             unit={settings.unit}
             today={today}
             translator={translator}
@@ -55,13 +58,22 @@ export function LifeCalendar({ store, translator, data, openSettings }: LifeCale
 interface CalendarGridProps {
     birthDate: string;
     lifeExpectancyYears: number;
+    expectancyHint: string | undefined;
     unit: GridUnit;
     today: Date;
     translator: Translator;
     onUnitChange: (unit: GridUnit) => void;
 }
 
-function CalendarGrid({ birthDate, lifeExpectancyYears, unit, today, translator, onUnitChange }: CalendarGridProps) {
+function CalendarGrid({
+    birthDate,
+    lifeExpectancyYears,
+    expectancyHint,
+    unit,
+    today,
+    translator,
+    onUnitChange,
+}: CalendarGridProps) {
     const rootRef = useRef<HTMLDivElement>(null);
     const [pointer, setPointer] = useState<CellPointer | null>(null);
     const life = useMemo(() => lifespan(parseISO(birthDate), lifeExpectancyYears), [birthDate, lifeExpectancyYears]);
@@ -93,7 +105,9 @@ function CalendarGrid({ birthDate, lifeExpectancyYears, unit, today, translator,
                         </button>
                     ))}
                 </div>
-                <div className="lifespan-calendar-stats">{statsText(stats, unit, translator)}</div>
+                <div className="lifespan-calendar-stats" title={expectancyHint}>
+                    {statsText(stats, unit, translator)}
+                </div>
             </div>
             <div className="lifespan-calendar-year lifespan-calendar-measure" aria-hidden>
                 <div className="lifespan-calendar-year-label" />
@@ -165,7 +179,7 @@ function Tooltip({ pointer, root, birth, showRange, translator }: TooltipProps) 
             <div className="lifespan-calendar-tooltip-period">
                 {showRange ? `${cell.key} · ${range.formatRange(cell.start, cell.end)}` : cell.key}
             </div>
-            <div>{translator.t("age", { age: ageAt(cell, birth) })}</div>
+            <div>{translator.t("age", { age: ageAt(cell.start, birth) })}</div>
         </div>
     );
 }

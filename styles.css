@@ -146,6 +146,10 @@
     text-align: center;
 }
 
+.lifespan-calendar-warning {
+    color: var(--text-warning);
+}
+
 .lifespan-calendar-error {
     color: var(--text-error);
 }

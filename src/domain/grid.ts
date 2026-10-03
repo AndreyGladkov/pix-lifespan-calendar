@@ -138,6 +138,6 @@ export function emptyPositions(block: YearBlock): { column: number; row: number 
     })).filter(({ column, row }) => !occupied.has(`${column}:${row}`));
 }
 
-export function ageAt(cell: Pick<Cell, "start">, birth: Date): number {
-    return Math.max(0, differenceInYears(max([cell.start, birth]), birth));
+export function ageAt(date: Date, birth: Date): number {
+    return Math.max(0, differenceInYears(max([date, birth]), birth));
 }

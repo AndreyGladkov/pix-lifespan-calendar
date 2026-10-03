@@ -1,8 +1,9 @@
 import { isAfter, isValid, parseISO, startOfDay } from "date-fns";
 import type { GridUnit } from "./domain/grid";
-import type { Sex } from "./domain/lifeExpectancy";
+import { LIFE_EXPECTANCY_RANGE, type Sex } from "./domain/lifeExpectancy";
+import { NO_LIFESTYLE, type Lifestyle } from "./domain/lifestyle";
 
-export interface LifeCalendarSettings {
+export interface LifeCalendarSettings extends Lifestyle {
     birthDate: string | null;
     country: string | null;
     sex: Sex;
@@ -15,10 +16,11 @@ export const DEFAULT_SETTINGS: LifeCalendarSettings = {
     country: null,
     sex: "unspecified",
     lifeExpectancyOverride: null,
+    ...NO_LIFESTYLE,
     unit: "week",
 };
 
-export const LIFE_EXPECTANCY_RANGE = { min: 1, max: 150 };
+const MIN_QUIT_AGE = 10;
 
 export type ParseResult<T> = { ok: true; value: T } | { ok: false };
 
@@ -39,5 +41,14 @@ export function parseLifeExpectancy(input: string): ParseResult<number | null> {
     if (!/^\d+(\.\d)?$/.test(normalized)) return { ok: false };
     const value = Number(normalized);
     if (value < LIFE_EXPECTANCY_RANGE.min || value > LIFE_EXPECTANCY_RANGE.max) return { ok: false };
+    return { ok: true, value };
+}
+
+export function parseQuitAge(input: string, currentAge: number | null): ParseResult<number | null> {
+    const trimmed = input.trim();
+    if (trimmed === "") return { ok: true, value: null };
+    if (!/^\d+$/.test(trimmed)) return { ok: false };
+    const value = Number(trimmed);
+    if (value < MIN_QUIT_AGE || (currentAge !== null && value > currentAge)) return { ok: false };
     return { ok: true, value };
 }
