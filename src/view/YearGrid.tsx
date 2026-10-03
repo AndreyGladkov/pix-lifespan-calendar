@@ -17,7 +17,7 @@ interface YearGridProps {
     onHover: (pointer: CellPointer | null) => void;
 }
 
-function useNearViewport<T extends Element>(): [RefObject<T | null>, boolean] {
+function useNearViewport<T extends Element>(): [RefObject<T>, boolean] {
     const ref = useRef<T>(null);
     const [near, setNear] = useState(false);
     useEffect(() => {
