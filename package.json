@@ -2,6 +2,7 @@
   "name": "pix-lifespan-calendar",
   "version": "1.0.0",
   "private": true,
+  "license": "MIT",
   "type": "module",
   "description": "Draw your life as a grid of days, weeks or months.",
   "scripts": {
