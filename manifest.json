@@ -1,7 +1,7 @@
 {
   "id": "pix-lifespan-calendar",
   "name": "Pix Lifespan Calendar",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "minAppVersion": "1.8.7",
   "description": "Draw your life as a grid of days, weeks or months, with life expectancy from WHO data.",
   "author": "Andrei Gladkov",
