@@ -140,6 +140,7 @@ export class LifeCalendarSettingTab extends PluginSettingTab {
             },
             this.lifeExpectancyRow(),
             this.choiceRow("unit", "unitName", "unitDesc", UNIT_OPTIONS),
+            this.notesFolderRow(),
         ];
     }
 
@@ -246,6 +247,20 @@ export class LifeCalendarSettingTab extends PluginSettingTab {
                 );
                 return this.watch(() => {
                     input?.setPlaceholder(this.estimatePlaceholder());
+                });
+            },
+        };
+    }
+
+    private notesFolderRow(): Row {
+        return {
+            name: "notesFolderName",
+            desc: "notesFolderDesc",
+            render: (setting) => {
+                setting.addText((text) => {
+                    text.setPlaceholder("/");
+                    text.setValue(this.store.get().notesFolder);
+                    text.onChange((notesFolder) => void this.store.update({ notesFolder: notesFolder.trim() }));
                 });
             },
         };

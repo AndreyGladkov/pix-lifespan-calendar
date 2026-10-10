@@ -3,6 +3,8 @@ import { StrictMode } from "react";
 import { createRoot, type Root } from "react-dom/client";
 import type { LifeExpectancyData } from "../domain/lifeExpectancy";
 import type { Translator } from "../i18n";
+import type { NoteActions } from "../noteActions";
+import type { NotesIndex } from "../notesIndex";
 import type { SettingsStore } from "../settingsStore";
 import { LifeCalendar } from "./LifeCalendar";
 
@@ -13,6 +15,8 @@ export interface LifeCalendarViewDeps {
     store: SettingsStore;
     translator: Translator;
     data: LifeExpectancyData;
+    notes: NotesIndex;
+    noteActions: NoteActions;
     openSettings: () => void;
 }
 

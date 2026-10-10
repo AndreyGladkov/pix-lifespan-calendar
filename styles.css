@@ -62,6 +62,7 @@
 .pix-lifespan-calendar-year-grid svg {
     display: block;
     touch-action: pan-y;
+    cursor: var(--cursor);
 }
 
 .pix-lifespan-calendar-measure {
@@ -119,6 +120,10 @@
 .pix-lifespan-calendar-cell.is-lost {
     fill: var(--color-red);
     opacity: 0.4;
+}
+
+.pix-lifespan-calendar-note-mark {
+    fill: var(--text-normal);
 }
 
 .pix-lifespan-calendar-details {

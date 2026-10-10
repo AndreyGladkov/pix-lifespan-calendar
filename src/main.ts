@@ -1,6 +1,8 @@
 import { getLanguage, Plugin } from "obsidian";
 import { lifeExpectancyData } from "./data";
 import { createTranslator, supportedLanguage, type Translator } from "./i18n";
+import { NoteActions } from "./noteActions";
+import { NotesIndex } from "./notesIndex";
 import { DEFAULT_SETTINGS, type LifeCalendarSettings } from "./settings";
 import { SettingsStore } from "./settingsStore";
 import { LifeCalendarSettingTab } from "./SettingTab";
@@ -17,10 +19,21 @@ export default class LifeCalendarPlugin extends Plugin {
         const store = new SettingsStore({ ...DEFAULT_SETTINGS, ...saved }, (settings) => this.saveData(settings));
         const translator: Translator = createTranslator(supportedLanguage(getLanguage()));
         const data = lifeExpectancyData;
+        const notes = new NotesIndex(this.app);
+        notes.track(this);
+        const noteActions = new NoteActions(this.app, store, translator);
 
         this.registerView(
             VIEW_TYPE_LIFE_CALENDAR,
-            (leaf) => new LifeCalendarView(leaf, { store, translator, data, openSettings: () => this.openSettings() }),
+            (leaf) =>
+                new LifeCalendarView(leaf, {
+                    store,
+                    translator,
+                    data,
+                    notes,
+                    noteActions,
+                    openSettings: () => this.openSettings(),
+                }),
         );
         this.addRibbonIcon(LIFE_CALENDAR_ICON, translator.t("openCalendar"), () => void this.activateView());
         this.addCommand({ id: "open", name: translator.t("openCalendar"), callback: () => void this.activateView() });

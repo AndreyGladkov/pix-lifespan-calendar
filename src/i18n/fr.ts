@@ -83,4 +83,11 @@ export const fr: typeof en = {
     lifeExpectancyReset: "Revenir à la valeur de l’OMS",
     unitName: "Unité de la grille",
     unitDesc: "Une cellule de la grille.",
+    notesFolderName: "Dossier des nouvelles notes",
+    notesFolderDesc:
+        "Les notes créées depuis le calendrier sont placées ici. Une note est liée à une date par sa propriété lifespan-date, elle peut donc être déplacée ensuite n’importe où.",
+    newNote: "Nouvelle note à cette date",
+    untitledNote: "Sans titre",
+    notesCount: plural({ one: "{count} note", other: "{count} notes" }),
+    legendNotes: "avec des notes",
 };

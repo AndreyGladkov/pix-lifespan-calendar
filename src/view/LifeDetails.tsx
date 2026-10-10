@@ -2,7 +2,7 @@ import { CELLS_PER_YEAR, type CellState, type GridUnit, type LifestyleMark } fro
 import type { ResolvedLifeExpectancy, Sex } from "../domain/lifeExpectancy";
 import type { LifestyleFactor } from "../domain/lifestyle";
 import type { MessageKey, PluralKey, Translator } from "../i18n";
-import { cellClass } from "./YearGrid";
+import { cellClass, NoteMark } from "./YearGrid";
 
 interface LifeDetailsProps {
     lifeExpectancy: ResolvedLifeExpectancy;
@@ -94,6 +94,18 @@ export function LifeDetails({ lifeExpectancy, place, sex, unit, open, translator
                         {t(item.label)}
                     </li>
                 ))}
+                <li>
+                    <svg width={SWATCH_SIZE} height={SWATCH_SIZE} aria-hidden>
+                        <rect
+                            className={cellClass({ state: "future", lifestyle: null })}
+                            width={SWATCH_SIZE}
+                            height={SWATCH_SIZE}
+                            rx={2}
+                        />
+                        <NoteMark x={0} y={0} size={SWATCH_SIZE} />
+                    </svg>
+                    {t("legendNotes")}
+                </li>
             </ul>
         </details>
     );

@@ -83,4 +83,11 @@ export const de: typeof en = {
     lifeExpectancyReset: "Auf WHO-Wert zurücksetzen",
     unitName: "Rastereinheit",
     unitDesc: "Eine Zelle des Rasters.",
+    notesFolderName: "Ordner für neue Notizen",
+    notesFolderDesc:
+        "Hier landen Notizen, die im Kalender erstellt werden. Eine Notiz ist über ihre Eigenschaft lifespan-date an ein Datum gebunden und kann später beliebig verschoben werden.",
+    newNote: "Neue Notiz für dieses Datum",
+    untitledNote: "Unbenannt",
+    notesCount: plural({ one: "{count} Notiz", other: "{count} Notizen" }),
+    legendNotes: "mit Notizen",
 };

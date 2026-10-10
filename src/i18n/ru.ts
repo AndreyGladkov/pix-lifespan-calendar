@@ -112,4 +112,16 @@ export const ru: typeof en = {
     lifeExpectancyReset: "Сбросить к значению ВОЗ",
     unitName: "Единица сетки",
     unitDesc: "Одна ячейка сетки.",
+    notesFolderName: "Папка для новых заметок",
+    notesFolderDesc:
+        "Сюда попадают заметки, созданные из календаря. Заметка привязана к дате свойством lifespan-date, поэтому её потом можно перенести куда угодно.",
+    newNote: "Новая заметка на эту дату",
+    untitledNote: "Без названия",
+    notesCount: plural({
+        one: "{count} заметка",
+        few: "{count} заметки",
+        many: "{count} заметок",
+        other: "{count} заметки",
+    }),
+    legendNotes: "есть заметки",
 };
