@@ -1,25 +1,16 @@
+import { ExternalStore } from "./externalStore";
 import type { LifeCalendarSettings } from "./settings";
 
-type Listener = () => void;
-
-export class SettingsStore {
-    private readonly listeners = new Set<Listener>();
-
+export class SettingsStore extends ExternalStore<LifeCalendarSettings> {
     constructor(
-        private current: LifeCalendarSettings,
+        current: LifeCalendarSettings,
         private readonly persist: (settings: LifeCalendarSettings) => Promise<void>,
-    ) {}
-
-    get = (): LifeCalendarSettings => this.current;
-
-    subscribe = (listener: Listener): (() => void) => {
-        this.listeners.add(listener);
-        return () => this.listeners.delete(listener);
-    };
+    ) {
+        super(current);
+    }
 
     async update(patch: Partial<LifeCalendarSettings>): Promise<void> {
-        this.current = { ...this.current, ...patch };
-        this.listeners.forEach((listener) => listener());
-        await this.persist(this.current);
+        this.set({ ...this.get(), ...patch });
+        await this.persist(this.get());
     }
 }

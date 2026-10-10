@@ -14,6 +14,7 @@ By default, life expectancy comes from World Health Organization (WHO) data for 
 - Life expectancy from WHO data for 185 countries by sex, or your own value.
 - Lifestyle adjustments: smoking, alcohol and physical activity.
 - Tooltip on hover: the period and your age at that time.
+- Notes on dates: click a cell to see the notes linked to it, open them or create a new one.
 - Stats: percentage of life lived and how many cells are ahead, plus a "Details" panel with the life expectancy breakdown and a color legend.
 - Interface in English, Russian, German and French, following Obsidian's language setting.
 - Works on desktop and mobile, with no horizontal scrolling.
@@ -35,6 +36,7 @@ By default, life expectancy comes from World Health Organization (WHO) data for 
 | **Smoking**, **Alcohol**, **Physical activity** | Adjustments to the WHO value, see "Lifestyle adjustments". Default is "Not specified", meaning no adjustment.                                                      |
 | **Life expectancy**                             | Your own value in years, from 1 to 150, with one decimal place. If empty, the WHO value is used and shown as a placeholder. The button on the right resets to WHO. |
 | **Grid unit**                                   | Days, weeks or months. The same as the buttons in the view.                                                                                                        |
+| **Folder for new notes**                        | Where notes created from the calendar go. Empty means the vault root.                                                                                              |
 
 ### Reading the grid
 
@@ -48,6 +50,7 @@ By default, life expectancy comes from World Health Organization (WHO) data for 
 | Faded red          | Taken by lifestyle: years the WHO value gives but your habits don't    |
 | Faded              | Outside life: before birth or after the expected date in the last year |
 | Empty outline      | 53rd week in a year that doesn't have one (see below)                  |
+| Dot                | The cell has notes (see "Notes on dates")                              |
 
 The expected end date is the birth date plus life expectancy in years multiplied by 365.2425 days. If that date has passed, the grid extends to the current year, and the stats show how many years you have lived beyond expectancy.
 
@@ -57,7 +60,20 @@ Weeks follow ISO 8601: a week belongs to the year that contains its Thursday. So
 
 For the same reason, in day mode a few days at the start of January can land in the previous year's block, and a few at the end of December in the next year's: each day sits in the block of its ISO week's year.
 
-ISO numbering was chosen because Obsidian's weekly notes use it (`2026-W40`), which will help link cells to notes later.
+ISO numbering was chosen because Obsidian's weekly notes use it (`2026-W40`), so weekly notes land in the right cell (see "Notes on dates").
+
+## Notes on dates
+
+Click a cell to open a menu with the period, your age, the notes linked to that cell and **"New note for this date"**. Clicking a note opens it; Ctrl/Cmd-click opens it in a new tab.
+
+A note is linked to a date in one of two ways:
+
+- The `lifespan-date` property, for example `lifespan-date: 2030-05-01`. It also accepts a week (`2030-W18`) or a month (`2030-05`).
+- The note's name, if it is exactly a date, an ISO week or a month: `2026-10-10`, `2026-W40`, `2026-10`. This picks up daily, weekly and monthly notes. If both are present, the property wins.
+
+The link lives in the note itself, so you can move or rename the note anywhere in the vault and it stays on its date. The "Folder for new notes" setting only decides where "New note for this date" creates it; such a note gets `lifespan-date` set to the first day of the cell.
+
+A note shows up in grids whose unit is the same as or coarser than its own: a day note is visible in days, weeks and months, a week note in weeks and months (in the month of its Monday), a month note only in months.
 
 ## Lifestyle adjustments
 

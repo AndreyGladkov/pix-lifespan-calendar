@@ -80,4 +80,11 @@ export const en = {
     lifeExpectancyReset: "Reset to WHO value",
     unitName: "Grid unit",
     unitDesc: "One cell of the grid.",
+    notesFolderName: "Folder for new notes",
+    notesFolderDesc:
+        "Notes created from the calendar go here. A note is tied to a date by its lifespan-date property, so it can be moved anywhere later.",
+    newNote: "New note for this date",
+    untitledNote: "Untitled",
+    notesCount: plural({ one: "{count} note", other: "{count} notes" }),
+    legendNotes: "has notes",
 };

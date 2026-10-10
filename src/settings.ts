@@ -10,6 +10,7 @@ export interface LifeCalendarSettings extends Lifestyle {
     lifeExpectancyOverride: number | null;
     unit: GridUnit;
     detailsOpen: boolean;
+    notesFolder: string;
 }
 
 export const DEFAULT_SETTINGS: LifeCalendarSettings = {
@@ -20,6 +21,7 @@ export const DEFAULT_SETTINGS: LifeCalendarSettings = {
     ...NO_LIFESTYLE,
     unit: "week",
     detailsOpen: true,
+    notesFolder: "Lifespan",
 };
 
 const MIN_QUIT_AGE = 10;

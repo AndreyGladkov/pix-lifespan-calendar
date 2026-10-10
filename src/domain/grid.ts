@@ -75,6 +75,8 @@ export function lifestyleMark(
     return null;
 }
 
+export const CELL_KEY_FORMAT: Record<GridUnit, string> = { day: "yyyy-MM-dd", week: "RRRR-'W'II", month: "yyyy-MM" };
+
 function isoWeekStart(isoYear: number, week: number): Date {
     return setISOWeek(startOfISOWeekYear(new Date(isoYear, 0, 4)), week);
 }
@@ -85,7 +87,7 @@ function dayPeriods(isoYear: number): Period[] {
     return Array.from({ length: days }, (_, index) => {
         const day = addDays(firstDay, index);
         return {
-            key: format(day, "yyyy-MM-dd"),
+            key: format(day, CELL_KEY_FORMAT.day),
             start: day,
             end: day,
             column: Math.floor(index / 7),
@@ -99,7 +101,7 @@ function weekPeriods(isoYear: number): Period[] {
     return Array.from({ length: weeks }, (_, index) => {
         const start = isoWeekStart(isoYear, index + 1);
         return {
-            key: format(start, "RRRR-'W'II"),
+            key: format(start, CELL_KEY_FORMAT.week),
             start,
             end: endOfISOWeek(start),
             column: index,
@@ -112,7 +114,7 @@ function monthPeriods(year: number): Period[] {
     return Array.from({ length: 12 }, (_, month) => {
         const start = new Date(year, month, 1);
         return {
-            key: format(start, "yyyy-MM"),
+            key: format(start, CELL_KEY_FORMAT.month),
             start,
             end: endOfMonth(start),
             column: month,
